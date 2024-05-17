@@ -1,0 +1,82 @@
+<div class="sidebar close" #sidebar>
+  <a class="logo">
+    <img src="https://www.keejob.com/media/recruiter/recruiter_14881/logo-14881-20180206-192420.JPG" (click)="toggleSidebar()" class="rounded">
+</a>
+    
+    <ul class="nav-links">
+     <li >
+      <a routerLink="/dashbord-chart">
+        <i class='bx bx-grid-alt'></i>
+        <span class="link_name">Dashboard</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" routerLink="/dashbord-chart" >Dashboard</a></li>
+      </ul>
+    </li>
+    <li>
+      <div class="iocn-link">
+        <a>
+          <i class='bx bx-collection'></i>
+          <span class="link_name">Gestion D'administration</span>
+        </a>
+        <i class='bx bxs-chevron-down arrow'></i>
+      </div>
+      <ul class="sub-menu">
+        <li ><a class="link_name" >Gestion D'administration</a></li>
+        <li><a routerLink="/user/management">Users</a></li>
+      </ul>
+    </li>
+    
+    <li>
+      <div class="iocn-link">
+        <a>
+          <i class='bx bx-collection'></i>
+          <span class="link_name">Gestion de stagiar</span>
+        </a>
+        <i class='bx bxs-chevron-down arrow'></i>
+      </div>
+      <ul class="sub-menu">
+        <li ><a class="link_name" >Gestion de stagiar</a></li>
+        <li><a routerLink="/stagier">Add stagiar</a></li>
+        <li><a routerLink="/stage">Add Stage</a></li>
+      </ul>
+    </li>
+    <li>
+      <a routerLink="/profile">
+        <i class='bx bxs-user-account'></i>
+        <span class="link_name">Profile</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" routerLink="/profile" >Profile</a></li>
+      </ul>
+    </li>
+    <li>
+      <a  routerLink="/setting" >
+        <i class='bx bx-cog'></i>
+        <span class="link_name">Setting</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name"  routerLink="/setting">Setting</a></li>
+      </ul>
+    </li>
+   
+
+
+
+
+    
+    <li>
+      <div class="profile-details">
+        <div class="profile-content" routerLink="/profile"  >
+          <img src= {{connectedUser.profileImageUrl}} class="img-fluid rounded-circle" alt="profile-img">
+        </div>
+        <div class="name-job" routerLink="/profile" >
+          <div class="profile_name">{{connectedUser.username}}</div>
+          <div class="job">{{connectedUser.role}}</div>
+        </div>
+        <a (click)="onLogOut()"><i class='bx bx-log-out' ></i></a> 
+      </div>
+    </li>
+  </ul>
+</div>
+

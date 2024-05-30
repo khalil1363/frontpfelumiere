@@ -1,11 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { FormControl, NgForm } from '@angular/forms';
+import { Observable, Subscription, map, startWith } from 'rxjs';
+import {  FormBuilder, FormControl, FormGroup, NgForm, Validators,  } from '@angular/forms';
 import { NotificationType } from '../enum/notification-type.enum';
 import { StagierService } from '../service/stagier.service';
 import { NotificationService } from '../service/notification.service';
 import { Stagier } from '../model/Stagier';
 import { Employee } from '../model/Employee';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Stage } from '../model/Stage';
+import { StageService } from '../service/stage.service';
 
 @Component({
   selector: 'app-stagier',
@@ -17,23 +20,125 @@ export class StagierComponent implements OnInit, OnDestroy {
   public stagiers: Stagier[];
   public selectedStagier: Stagier;
   public refreshing: boolean;
-
+  public employees:Employee[];
   p: number = 1;
   itemsPerPage: number = 6;
   totalElements: any;
 
+  form: FormGroup;
+  
+  supervisors: Employee[] = [];
+
+ 
+  stages: Stage[] = [];
+  stageReferenceControl = new FormControl();
+  selectedStage: Stage;
+  filteredStages: Observable<Stage[]>; 
 
 
 
-  public supervisorControl = new FormControl();
-  public filteredSupervisors: Employee[];
-
-
-  constructor(private stagierService: StagierService, private notificationService: NotificationService) {}
+  
+  filteredSupervisors: Observable<Employee[]>;
+  supervisorControl = new FormControl();
+  selectedSupervisor: Employee;
+  constructor(private stagierService: StagierService,
+               private notificationService: NotificationService 
+               ,private httpClient: HttpClient,private fb: FormBuilder,
+               private satgeService : StageService 
+              ) { 
+               }
+  
 
   ngOnInit(): void {
     this.getStagiers(true);
+    this.getEmployees(false);
+    this.getStages(false);
+    this.filteredSupervisors = this.supervisorControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterSupervisors(value))
+    );
+   
+    this.form = this.fb.group({
+      matricule: ['', Validators.required], // Added matricule control
+      // Other form controls...
+    });
+
+    this.filteredStages = this.stageReferenceControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterStages(value))
+    );
   }
+  public selectSupervisor(supervisor: Employee): void {
+    this.selectedSupervisor = supervisor;
+    this.form.get('superviseurMatricule').setValue(supervisor.mat);
+  }
+  private _filterSupervisors(value: string): Employee[] {
+    const filterValue = value.toLowerCase();
+    return this.supervisors.filter(supervisor =>
+      supervisor.nomPrenom.toLowerCase().includes(filterValue)
+    );
+  }
+ 
+
+  private _filterStages(value: string): Stage[] {
+    const filterValue = value.toLowerCase();
+    return this.stages.filter(stage =>
+      stage.theme.toLowerCase().includes(filterValue)
+    );
+  }
+
+  public selectStage(stage: Stage): void {
+    this.selectedStage = stage;
+  }
+
+
+
+
+
+  private getStages(showNotification: boolean): void {
+    this.refreshing = true;
+    this.subscriptions.push(
+      this.satgeService.getAllStages().subscribe(
+        (response) => {
+          this.stages = response;
+          this.refreshing = false;
+          if (showNotification) {
+            this.sendNotification(NotificationType.SUCCESS, 'Stages loaded successfully');
+          }
+        },
+        (error) => {
+          this.refreshing = false;
+          this.sendNotification(NotificationType.ERROR, 'Failed to load stages');
+        }
+      )
+    );
+  }
+
+  public getEmployees (showNotification : boolean ):void {
+    this.refreshing = true ;
+    this.subscriptions.push(
+    this.stagierService.getAllEmployees().subscribe(
+        (response : Employee[] ) => {
+          this.stagierService.addemployeesToLocalCache(response);
+          this.employees  = response ;
+          this.supervisors = response;
+          this.refreshing = false ;
+          this.totalElements=response.length;
+          if (showNotification){
+            this.sendNotification(NotificationType.SUCCESS, `${response.length} Employee(s) loaded successfully . `) ;
+          }
+        },
+        (errorResponse : HttpErrorResponse) => {
+          this.sendNotification(NotificationType.ERROR , errorResponse.error.message) ;
+          this.refreshing = false ;
+        }
+      )
+    );
+  
+  }
+
+
+
 
   public getStagiers(showNotification: boolean): void {
     this.refreshing = true;
@@ -55,35 +160,13 @@ export class StagierComponent implements OnInit, OnDestroy {
   }
   
 
-  filterSupervisors(name: string): void {
-    // Call a service method to fetch supervisors from the database based on name
-    this.stagierService.getSupervisorsByName(name).subscribe(
-      (response: Employee[]) => {
-        this.filteredSupervisors = response;
-      },
-      (error) => {
-        console.error('Error fetching supervisors:', error);
-      }
-    );
-  }
-
-
-  displayFn(supervisor?: Employee): string | undefined {
-    return supervisor ? supervisor.nomPrenom : undefined;
-  }
-
-  // Handle supervisor selection
-  selectSupervisor(supervisor: Employee): void {
-    this.supervisorControl.setValue(supervisor.nomPrenom);
-    // You can set the supervisor object in your model as needed
-    this.selectedStagier.superviseur = supervisor;
-  }
 
 
   public selectStagier(stagier: Stagier): void {
     this.selectedStagier = stagier;
     this.clickButton('openStagierInfo');
   }
+
 
   public addNewStagier(stagierForm: NgForm): void {
     if (stagierForm.valid) {

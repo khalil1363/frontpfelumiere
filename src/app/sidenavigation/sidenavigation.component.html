@@ -1,3 +1,5 @@
+
+
 <div class="sidebar close" #sidebar>
   <a class="logo">
     <img src="https://www.keejob.com/media/recruiter/recruiter_14881/logo-14881-20180206-192420.JPG" (click)="toggleSidebar()" class="rounded">
@@ -13,12 +15,15 @@
         <li><a class="link_name" routerLink="/dashbord-chart" >Dashboard</a></li>
       </ul>
     </li>
+    <br><hr>
     <li>
       <div class="iocn-link">
         <a>
           <i class='bx bx-collection'></i>
           <span class="link_name">Gestion D'administration</span>
+          
         </a>
+         <br> <hr>
         <i class='bx bxs-chevron-down arrow'></i>
       </div>
       <ul class="sub-menu">
@@ -26,7 +31,7 @@
         <li><a routerLink="/user/management">Users</a></li>
       </ul>
     </li>
-    
+    <br><hr>
     <li>
       <div class="iocn-link">
         <a>
@@ -41,6 +46,23 @@
         <li><a routerLink="/stage">Add Stage</a></li>
       </ul>
     </li>
+    <br><hr>
+    <li>
+      <div class="iocn-link">
+        <a>
+          <i class='bx bx-collection'></i>
+          <span class="link_name">Gestion de Formation</span>
+        </a>
+        <i class='bx bxs-chevron-down arrow'></i>
+      </div>
+      <ul class="sub-menu">
+        <li ><a class="link_name" >Gestion de Formatio</a></li>
+        <li><a routerLink="/formation">Add formation</a></li>
+        <li><a routerLink="/propositionformation">Add propositionformation</a></li>
+        <li><a routerLink="/planning">Add planning</a></li>
+      </ul>
+    </li>
+    <br><hr>
     <li>
       <a routerLink="/profile">
         <i class='bx bxs-user-account'></i>
@@ -50,6 +72,7 @@
         <li><a class="link_name" routerLink="/profile" >Profile</a></li>
       </ul>
     </li>
+    <br><hr>
     <li>
       <a  routerLink="/setting" >
         <i class='bx bx-cog'></i>
@@ -58,13 +81,8 @@
       <ul class="sub-menu blank">
         <li><a class="link_name"  routerLink="/setting">Setting</a></li>
       </ul>
-    </li>
-   
-
-
-
-
-    
+    </li>  
+    <br>
     <li>
       <div class="profile-details">
         <div class="profile-content" routerLink="/profile"  >
@@ -79,4 +97,3 @@
     </li>
   </ul>
 </div>
-

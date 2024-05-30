@@ -4,6 +4,7 @@ import {HttpClient, HttpErrorResponse, HttpEvent, HttpResponse} from '@angular/c
 import { Observable } from 'rxjs';
 import { User } from '../model/user';
 import { CostumHttpResponse } from '../model/custom-http-response';
+import { Employee } from '../model/Employee';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,9 @@ export class UserService {
   private host  = environment.apiUrl ;
 
   constructor(private http : HttpClient ) { }
+
+ 
+
 
   public getUsers ():Observable < User[] > {
   return this.http.get<User[]>(`${this.host}/user/list`);

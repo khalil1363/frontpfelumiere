@@ -4,6 +4,7 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+
 .logo{
   text-align: center;
   display: flex;
@@ -13,9 +14,10 @@
   justify-content: center;
   align-items: center;
 }
+
 .logo img{
-  width: 69px;
-  height: 100px;
+  width: 67px;
+  height: 67;
   border-radius: 60%;
 }
 .sidebar{
@@ -74,7 +76,7 @@
   transition: all 0.4s ease;
 }
 .sidebar .nav-links li:hover{
-  background:black;
+  background:gray;
 }
 .sidebar .nav-links li .iocn-link{
   display: flex;
@@ -118,7 +120,7 @@
 .sidebar .nav-links li .sub-menu{
   padding: 6px 6px 14px 80px;
   margin-top: -10px;
-  background: black;
+ /* background: gray; */
   display: none;
 }
 .sidebar .nav-links li.showMenu .sub-menu{
@@ -177,7 +179,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: black;
+  background: gray;
   padding: 12px 0;
   transition: all 0.5s ease;
 }
@@ -268,4 +270,8 @@
     width: 100%;
     left: 0;
   }
+  li{
+    padding: 20px;
+  }
+ 
 }

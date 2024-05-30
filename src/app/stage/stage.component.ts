@@ -26,10 +26,7 @@ export class stageComponent implements OnInit , OnDestroy  {
   ngOnInit(): void {
     this.getStages(true) ;
   }
-  public onSelectUser(selectedstage: Stage): void {
-    this.selectedstage = selectedstage;
-    this.clickButton('openUserInfo'); // button id = (openUserInfo) data-target = #viewUserModal
-  }
+ 
   public saveNewUser () : void { // open newUserModal 
     this.clickButton('new-user-save');
   }
@@ -43,6 +40,7 @@ export class stageComponent implements OnInit , OnDestroy  {
     this.subscriptions.push(
       this.satgeService.getAllStages().subscribe(
         (response) => {
+          this.satgeService.addStagesToLocalCache(response)
           this.stages = response;
           this.refreshing = false;
           if (showNotification) {
@@ -56,7 +54,21 @@ export class stageComponent implements OnInit , OnDestroy  {
       )
     );
   }
-
+  public searchStages (searchTerm : string) : void {
+    const results : Stage[] = [] ;
+    for (const stage of this.satgeService.getStagesFromLocalCache()){
+      if ( stage.theme.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+           stage.departement.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+           stage.reference.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+           stage.site.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1  )    {
+            results.push(stage) ;
+      }
+    }
+    this.stages=results ;
+    if (results.length === 0 || ! searchTerm){
+      this.stages = this.satgeService.getStagesFromLocalCache();
+    }
+  }
   addNewStage(stageForm: NgForm): void {
     if (stageForm.valid) {
       this.satgeService.addStage(stageForm.value).subscribe(
@@ -91,7 +103,7 @@ export class stageComponent implements OnInit , OnDestroy  {
     // Create a copy of the selected stage to avoid modifying the original stage directly
     this.selectedstage = { ...stage };
     // Open the edit modal
-    this.clickButton('openUserEdit');
+    this.clickButton('openstageEdit');
   }
   deleteStage(stageId: number): void {
     if (confirm('Are you sure you want to delete this stage?')) {
@@ -118,6 +130,10 @@ export class stageComponent implements OnInit , OnDestroy  {
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub=>sub.unsubscribe());
+  }
+  public selectStage(selectedStage: Stage): void {
+    this.selectedstage = selectedStage;
+    this.clickButton('openStageInfo');
   }
 
 }

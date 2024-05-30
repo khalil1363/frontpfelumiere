@@ -1,20 +1,17 @@
-body{
-    background:#ffffff;
-    padding-left: 260px;
+body {
+    background: #ffffff;
+    padding-left: 260px; /* Assuming this is for the sidebar width */
     padding-right: 25px;
     margin-top: 15px;
     margin-bottom: 20px;
 }
 
-
-.fas{
-    width: 40px ;
-    height: 20px ;
-    font-size: 30px ;
+.main-content {
+    padding-left: 20px; /* Space between the sidebar and the main content */
+    margin-right: 25px; /* Ensure the right margin is maintained */
 }
 
-
-.centered-element{
+.centered-element {
     margin-left: auto;
     margin-right: auto;
     background-color: rgb(255, 255, 255);
@@ -22,8 +19,7 @@ body{
     width: 400px;
 }
 
-
-.paginator{
+.paginator {
     font-family: 'Lato', sans-serif;
     font-size: 15px;
 }

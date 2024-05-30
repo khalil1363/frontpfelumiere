@@ -15,12 +15,9 @@ import { UserComponent } from './user/user.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { GroupComponent } from './group/group.component';
 import { SettingComponent } from './setting/setting.component';
 import { UniteFabricationComponent } from './unite-fabrication/unite-fabrication.component';
-import { LigneProductionComponent } from './ligne-production/ligne-production.component';
 import {NgxPaginationModule} from 'ngx-pagination' ;
-
 import{stageComponent} from './stage/stage.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PicklisteComponent } from './pickliste/pickliste.component';
@@ -28,8 +25,14 @@ import { DashbordChartComponent } from './dashbord-chart/dashbord-chart.componen
 import { NgChartsModule  } from 'ng2-charts';
 import { SidenavigationComponent } from './sidenavigation/sidenavigation.component';
 import { AcceuilPageComponent } from './acceuil-page/acceuil-page.component';
+import {FormationComponent} from './formation/formation.component'
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 import { StagierComponent } from './stagiaire/stagiaire.component';
-
+import { placements } from '@popperjs/core';
+import { Propositionformation } from './propositionformation/propositionformation.component';
+import { PlanningComponent } from './planning/planning.component';
 
 
 
@@ -39,10 +42,9 @@ import { StagierComponent } from './stagiaire/stagiaire.component';
     RegisterComponent,
     LoginComponent,
     UserComponent,
-    GroupComponent,
+    FormationComponent,
     SettingComponent,
     UniteFabricationComponent,
-    LigneProductionComponent,
     StagierComponent,
     ProfileComponent,
     PicklisteComponent,
@@ -50,37 +52,27 @@ import { StagierComponent } from './stagiaire/stagiaire.component';
     SidenavigationComponent,
     AcceuilPageComponent,
     stageComponent,
-   
+    Propositionformation,
+    PlanningComponent
     
   ],
   imports: [
     BrowserModule,
-
     AppRoutingModule,
     FormsModule,
-    HttpClientModule ,
-
-
-
-
-
+    HttpClientModule,
     FormsModule,
-    
     NotificationModule,
     BrowserAnimationsModule,
     FontAwesomeModule,
     NgxPaginationModule,
     NgChartsModule,
-    
-    
-    
-      
-    
+    MatAutocompleteModule,
+    MatInputModule,
+    ReactiveFormsModule,    
   ],
   providers: [NotificationService , AuthenticationGuard ,AuthenticationService , UserService ,
      { provide :HTTP_INTERCEPTORS , useClass : AuthInterceptor , multi :true }] ,
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}
-
-

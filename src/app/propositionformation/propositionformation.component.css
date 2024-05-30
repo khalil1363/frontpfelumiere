@@ -42,17 +42,3 @@ body{
     outline: none;
     background: #d4d4d4;
 }
-.attribute-group {
-    margin-bottom: 10px;
-  }
-  
-  .attribute-label {
-    font-weight: bold;
-    color: #007bff;
-  }
-  
-  .attribute-value {
-    font-size: 16px;
-    color: #333;
-  }
-  

@@ -37,14 +37,14 @@
       </thead>
       <tbody>
         <tr *ngFor="let stagier of stagiers" class="text-center">
-          <td>{{ stagier.nomPrenom }}</td>
-          <td>{{ stagier.institut }}</td>
-          <td>{{ stagier.diplome }}</td>
-          <td>{{ stagier.specialite }}</td>
-          <td>{{ stagier.cin }}</td>
-          <td>{{ stagier.tel }}</td>
-          <td>{{ stagier.superviseur.nomPrenom }}</td>
-          <td>{{ stagier.stage.theme }}</td>
+          <td (click)="selectStagier(stagier)">    {{ stagier.nomPrenom }}</td>
+          <td  (click)="selectStagier(stagier)"> {{ stagier.institut }}</td>
+          <td  (click)="selectStagier(stagier)"> {{ stagier.diplome }}</td>
+          <td (click)="selectStagier(stagier)"> {{ stagier.specialite }}</td>
+          <td (click)="selectStagier(stagier)"> {{ stagier.cin }}</td>
+          <td (click)="selectStagier(stagier)">  {{ stagier.tel }}</td>
+          <td (click)="selectStagier(stagier)"> {{ stagier.superviseur.nomPrenom }}</td>
+          <td (click)="selectStagier(stagier)"> {{ stagier.stage.theme }}</td>
           <td>
             <div class="btn-group">
               <button class="btn btn" (click)="selectStagierForEdit(stagier)">
@@ -71,52 +71,48 @@
 </body>
 
 <!-- Modal Stagier Info -->
-<div class="modal fade bd-example-modal-lg" id="viewStagierModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="viewStagierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-center" id="exampleModal LongTitle"></h5>
+        <h5 class="modal-title text-center" id="exampleModalLongTitle">Stagier Details</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div>
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-12 col-sm-auto">
-                  <div class="mx-auto" style="width: 120px;">
-                    <div class="d-flex justify-content-center align-items-center rounded">
-                      <img class="rounded" height="120" width="120">
-                    </div>
-                  </div>
-                </div>
-                <div class="col d-flex flex-column flex-sm-row justify-content-between align-items-sm-center">
-                  <div class="text-center text-sm-left mb-2 mb-sm-0">
-                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap"></h4>
-                    <p class="mb-0"></p>
-                    <div class="text-muted">
-                      <small></small>
-                    </div>
-                    <div class="text-muted">
-                      <small></small>
-                    </div>
-                    <div class="text-muted">
-                      <small></small>
-                    </div>
-                    <div class="text-muted">
-                      <small></small>
-                    </div>
-                    <div class="text-muted">
-                      <small></small>
-                    </div>
-                  </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <div class="text-center text-sm-left mb-2 mb-sm-0">
+                  <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{ selectedStagier?.nomPrenom }}</h4>
+                  <dl class="row">
+                    <dt class="col-sm-4">Institut:</dt>
+                    <dd class="col-sm-8">{{ selectedStagier?.institut }}</dd>
+
+                    <dt class="col-sm-4">Diplôme:</dt>
+                    <dd class="col-sm-8">{{ selectedStagier?.diplome }}</dd>
+
+                    <dt class="col-sm-4">Spécialité:</dt>
+                    <dd class="col-sm-8">{{ selectedStagier?.specialite }}</dd>
+
+                    <dt class="col-sm-4">CIN:</dt>
+                    <dd class="col-sm-8">{{ selectedStagier?.cin }}</dd>
+
+                    <dt class="col-sm-4">Téléphone:</dt>
+                    <dd class="col-sm-8">{{ selectedStagier?.tel }}</dd>
+
+                    <dt class="col-sm-4">Superviseur:</dt>
+                    <dd class="col-sm-8">{{ selectedStagier?.superviseur?.nomPrenom }}</dd>
+
+                    <dt class="col-sm-4">Stage:</dt>
+                    <dd class="col-sm-8">{{ selectedStagier?.stage?.theme }}</dd>
+                  </dl>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
       <div class="modal-footer">
@@ -126,7 +122,8 @@
   </div>
 </div>
 
-<!-- Modal New Stagier -->
+
+<!-- Modal New Stagier-->
 <div class="modal fade" id="addStagierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
@@ -167,8 +164,30 @@
                 <input type="text" class="form-control" id="tel" name="tel" ngModel required>
               </div>
               <div class="form-group">
+                <label for="superviseurNomPrenom">Nom du Superviseur</label>
+                <input type="text" class="form-control" id="superviseurNomPrenom" [formControl]="supervisorControl">
+                <div *ngIf="filteredSupervisors | async as supervisors">
+                  <ul *ngIf="supervisors.length > 0" class="autocomplete-results">
+                    <li *ngFor="let supervisor of supervisors" (click)="selectedSupervisor = supervisor">
+                      {{ supervisor.nomPrenom }} (Matricule: {{ supervisor.mat }})
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-group">
                 <label for="superviseurMatricule">Superviseur Matricule</label>
                 <input type="text" class="form-control" id="superviseurMatricule" name="superviseurMatricule" ngModel required>
+              </div>
+              <div class="form-group">
+                <label for="stageTheme">Theme du Stage</label>
+                <input type="text" class="form-control" id="stageTheme" [formControl]="stageReferenceControl">
+                <div *ngIf="filteredStages | async as stages">
+                  <ul *ngIf="stages.length > 0" class="autocomplete-results">
+                    <li *ngFor="let stage of stages" (click)="selectedStage = stage">
+                      {{ stage.theme }} (Référence: {{ stage.reference }})
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div class="form-group">
                 <label for="stageRef">Stage Référence</label>
@@ -184,8 +203,76 @@
       </form>
     </div>
   </div>
-</div>
-
+</div> 
+<!-- 
+<div class="modal fade" id="addStagierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Stagier</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #stagierForm="ngForm" (ngSubmit)="addNewStagier(stagierForm)">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="nomPrenom">Nom & Prénom</label>
+                <input type="text" class="form-control" id="nomPrenom" formControlName="nomPrenom" ngModel  required>
+              </div>
+              <div class="form-group">
+                <label for="institut">Institut</label>
+                <input type="text" class="form-control" id="institut" name="institut" ngModel required>
+              </div>
+              <div class="form-group">
+                <label for="diplome">Diplôme</label>
+                <input type="text" class="form-control" id="diplome" name="diplome" ngModel required>
+              </div>
+              <div class="form-group">
+                <label for="specialite">Spécialité</label>
+                <input type="text" class="form-control" id="specialite" name="specialite" ngModel required>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="cin">CIN</label>
+                <input type="text" class="form-control" id="cin" name="cin" ngModel required>
+              </div>
+              <div class="form-group">
+                <label for="tel">Téléphone</label>
+                <input type="text" class="form-control" id="tel" name="tel" ngModel required>
+              </div>
+              <div class="form-group">
+                <label for="superviseurName">Nom Du Superviseur</label>
+                <input type="text" class="form-control" id="superviseurName" formControlName="superviseurName" [matAutocomplete]="auto">
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+  <mat-option *ngFor="let supervisor of filteredSupervisors | async" [value]="supervisor.nomPrenom">
+    {{ supervisor.nomPrenom }}
+  </mat-option>
+</mat-autocomplete>
+              </div>
+              
+              <div class="form-group">
+                <label for="superviseurMatricule">Superviseur Matricule</label>
+                <input type="text" class="form-control" id="superviseurMatricule" name="superviseurMatricule" ngModel required >
+              </div>
+              <div class="form-group">
+                <label for="stageRef">Stage Référence</label>
+                <input type="text" class="form-control" id="stageRef" name="stageRef" ngModel required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> -->
 
 
 <!-- Modal Edit Stagier -->
@@ -247,6 +334,8 @@
     </div>
   </div>
 </div>
+
+
 <div>
   <app-sidenavigation></app-sidenavigation>
 </div>

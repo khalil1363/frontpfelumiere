@@ -33,4 +33,14 @@ export class StageService {
   deleteStage(idStage: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/delete/${idStage}`);
   }
+  public addStagesToLocalCache(stages :Stage[]) : void {
+    localStorage.setItem('stages',JSON.stringify(stages));
+  }
+  
+  public getStagesFromLocalCache() : Stage [] {
+    if (localStorage.getItem('stages')){
+    return JSON.parse(localStorage.getItem('stages')) ;
+   } 
+  return null ;
+  } 
 }

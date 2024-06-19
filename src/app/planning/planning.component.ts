@@ -24,7 +24,8 @@ export class PlanningComponent implements OnInit, OnDestroy {
 
   constructor(
     private planningService: PlanningService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    
   ) {}
 
   ngOnInit(): void {

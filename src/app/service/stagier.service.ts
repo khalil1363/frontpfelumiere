@@ -24,7 +24,7 @@ export class StagierService {
   }
   getSupervisorsByName(name: string): Observable<Employee[]> {
     return this.http.get<Employee[]>(`http://localhost:8080/api/employees/supervisors?name=${name}`);
-    // Adjust the endpoint and parameters as per your backend API
+ 
   }
   addStagier(stagierData: any): Observable<Stagier> {
     const params = new HttpParams()

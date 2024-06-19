@@ -21,49 +21,69 @@
       </div>
       <br><br>
       <!-- Planning table -->
-      <div>
-        <table class="table table-hover">
-          <thead class="table-borderless">
-            <tr class="text-center" style="text-align: center; font-size: small;">
-              <th style="text-align: center">Module</th>
-              <th style="text-align: center">Departement</th>
-              <th style="text-align: center">Fonction</th>
-              <th style="text-align: center">Feedback</th>
-              <th style="text-align: center">Date</th>
-              <th style="text-align: center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let planning of plannings | paginate: { itemsPerPage: itemsPerPage, currentPage: p }" class="text-center">
-              <td>{{ planning.module }}</td>
-              <td>{{ planning.departement }}</td>
-              <td>{{ planning.fonction }}</td>
-              <td>{{ planning.feedback }}</td>
-              <td>{{ planning.date | date: 'dd-MM-yyyy' }}</td>
-              <td>
-                <div class="btn-group">
-                  <button class="btn btn" (click)="selectPlanningForEdit(planning)">
-                    <i style="font-size: medium; color: grey;" class="fas fa-edit"></i>
-                  </button>
-                  <button class="btn btn" (click)="deletePlanning(planning.idPlanning)">
-                    <i style="font-size: small; color: red;" class="fas fa-trash"></i>
-                  </button>
-                  
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="container">
         <div>
-          <div class="centered-element">
-            <pagination-controls class="paginator" (pageChange)="p = $event"></pagination-controls>
-          </div>
+          <table class="table table-hover">
+            <thead class="table-borderless">
+              <tr class="text-center" style="text-align:center; font-size:small">
+                <th style="text-align:center">Module</th>
+                <th style="text-align:center">Departement</th>
+                <th style="text-align:center">Type</th>
+                <th style="text-align:center">Categorie</th>
+                <th style="text-align:center">Demandeur</th>
+                <th style="text-align:center">Poste Proposé Par</th>
+                <th style="text-align:center">Cabinet Proposé</th>
+                <th style="text-align:center">Objectif</th>
+                <th style="text-align:center">Activite</th>
+                <th style="text-align:center">Formateur</th>
+                <th style="text-align:center">Observation</th>
+                <th style="text-align:center">Budget Prévisionnel</th>
+                <th style="text-align:center">Budget Estimatif</th>
+                <th style="text-align:center">Status Planning</th>
+                <th style="text-align:center">Coût Réel</th>
+                <th style="text-align:center">Évaluation Chaud</th>
+                <th style="text-align:center">Évaluation Froid</th>
+                <th style="text-align:center">Date de Réalisation</th>
+                <th style="text-align:center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let planning of plannings" class="text-center">
+                <td>{{ planning.module }}</td>
+                <td>{{ planning.departement }}</td>
+                <td>{{ planning.type }}</td>
+                <td>{{ planning.categorie }}</td>
+                <td>{{ planning.demandeur }}</td>
+                <td>{{ planning.posteProposerPar }}</td>
+                <td>{{ planning.cabinetproposer }}</td>
+                <td>{{ planning.objectif }}</td>
+                <td>{{ planning.activite }}</td>
+                <td>{{ planning.formateur }}</td>
+                <td>{{ planning.observation }}</td>
+                <td>{{ planning.budgetPrevisionnel }}</td>
+                <td>{{ planning.budgetEstimatif }}</td>
+                <td>{{ planning.statusPlannig }}</td>
+                <td>{{ planning.coutreel }}</td>
+                <td>{{ planning.evaluationChaud }}</td>
+                <td>{{ planning.evaluationFroid }}</td>
+                <td>{{ planning.dateRealisation | date }}</td>
+                <td>
+                  <div class="btn-group">
+                    <button class="btn btn" (click)="selectPlanningForEdit(planning)">
+                      <i style="font-size: medium; color: grey;" class="fas fa-user-edit"></i>
+                    </button>
+                    <button class="btn btn" (click)="deletePlanning(planning.idPlanning)">
+                      <i style="font-size: small; color: red;" class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <button [hidden]="true" type="button" id="openPlanningInfo" data-toggle="modal" data-target="#viewPlanningModal"></button>
-      <button [hidden]="true" type="button" id="openPlanningEdit" data-toggle="modal" data-target="#editPlanningModal"></button>
-    </div>
-  </div>
+      
+      
 
   <!-- Add Planning Modal -->
   <div class="modal fade" id="addPlanningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -77,6 +97,7 @@
         </div>
         <form #planningForm="ngForm" (ngSubmit)="addNewPlanning(planningForm)">
           <div class="modal-body">
+            
             <div class="form-group">
               <label for="idFormation">ID Formation</label>
               <input type="number" class="form-control" id="idFormation" name="idFormation" ngModel required>
@@ -167,9 +188,7 @@
         <div class="modal-body">
           <p><strong>Module:</strong> {{ selectedPlanning?.module }}</p>
           <p><strong>Departement:</strong> {{ selectedPlanning?.departement }}</p>
-          <p><strong>Fonction:</strong> {{ selectedPlanning?.fonction }}</p>
-          <p><strong>Feedback:</strong> {{ selectedPlanning?.feedback }}</p>
-          <p><strong>Date:</strong> {{ selectedPlanning?.date | date: 'dd-MM-yyyy' }}</p>
+     
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -5,6 +5,7 @@ import { NotificationService } from '../service/notification.service';
 import { NotificationType } from '../enum/notification-type.enum';
 import { NgForm } from '@angular/forms';
 import { Formation } from '../model/Formation';
+import { Planning } from '../model/Planning';
 
 @Component({
   selector: 'app-formation',
@@ -62,7 +63,26 @@ export class FormationComponent implements OnInit, OnDestroy {
       )
     );
   }
+  
+  addFormationToPlanning(idFormation: number): void {
+    this.formationService.addFormationToPlanning(idFormation).subscribe(
+      (response: Planning) => {
+        if (response) {
+          this.sendNotification(NotificationType.SUCCESS, 'Formation added to planning successfully');
+          // Additional actions upon successful addition to planning
+        } else {
+          this.sendNotification(NotificationType.ERROR, 'Failed to add formation to planning');
+        }
+      },
+      (error) => {
+        this.sendNotification(NotificationType.ERROR, 'Failed to add formation to planning');
+      }
+    );
+  }
 
+
+
+  
   addNewFormation(formationForm: NgForm): void {
     if (formationForm.valid) {
       this.formationService.addFormation(formationForm.value).subscribe(

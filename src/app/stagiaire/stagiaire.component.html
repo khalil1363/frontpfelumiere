@@ -176,7 +176,7 @@
               </div>
               <div class="form-group">
                 <label for="superviseurMatricule">Superviseur Matricule</label>
-                <input type="text" class="form-control" id="superviseurMatricule" name="superviseurMatricule" ngModel required>
+                <input type="text" class="form-control" id="superviseurMatricule" name="superviseurMatricule" ngModel >
               </div>
               <div class="form-group">
                 <label for="stageTheme">Theme du Stage</label>
@@ -185,13 +185,14 @@
                   <ul *ngIf="stages.length > 0" class="autocomplete-results">
                     <li *ngFor="let stage of stages" (click)="selectedStage = stage">
                       {{ stage.theme }} (Référence: {{ stage.reference }})
+                      
                     </li>
                   </ul>
                 </div>
               </div>
               <div class="form-group">
                 <label for="stageRef">Stage Référence</label>
-                <input type="text" class="form-control" id="stageRef" name="stageRef" ngModel required>
+                <input type="text" class="form-control" id="stageRef" name="stageRef" ngModel >
               </div>
             </div>
           </div>

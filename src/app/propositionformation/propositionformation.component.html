@@ -27,25 +27,57 @@
       <table class="table table-hover">
         <thead class="table-borderless">
           <tr class="text-center" style="text-align:center; font-size:small">
-            <th style="text-align:center">Module</th>
-            <th style="text-align:center">Type</th>
-            <th style="text-align:center">Categorie</th>
-            <th style="text-align:center">Description</th>
-            <th style="text-align:center">Proposé par</th>
-            <th style="text-align:center">Nombre d'heures</th>
+            <th style="text-align:center">module</th>
+            <th style="text-align: center">typePropo</th>
+            <th style="text-align: center">categorie</th>
+            <th style="text-align: center">description</th>
+            <th style="text-align: center">proposePar</th>
+            <th style="text-align:center">poste</th>
+            <th style="text-align:center">cabine</th>
+            <th style="text-align:center">departement</th>
+            <th style="text-align: center">objectife</th>
+            <th style="text-align: center">activite</th>
+            <th style="text-align: center">Observation</th>
+            <th style="text-align: center">periodeSouhaite</th>
+            <th style="text-align: center">DateCreation</th>
             <th>Status</th>
+            <th>formateurPropose</th>
+            
+            <th>participantpropose</th>
             <th style="text-align:center">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let proposition of propositions " class="text-center">
-            <td >{{ proposition?.module }}</td>
-            <td >{{ proposition?.type }}</td>
-            <td >{{ proposition.categorie }}</td>
-            <td >{{ proposition.description }}</td>
-            <td >{{ proposition.proposePar }}</td>
-            <td >{{ proposition.nbHeures }}</td>
+            <td >{{ proposition.module }}</td>
+            <td>{{ proposition.typePropo }}</td>
+            <td>{{ proposition.categorie }}</td>
+            <td>{{ proposition.description }}</td>
+            <td >{{ proposition?.proposePar }}</td>
+            <td >{{ proposition?.posteProposerPar }}</td>
+            <td >{{ proposition.cabinetproposer }}</td>
+            <td >{{ proposition.departement }}</td>
+            
+            <td>{{ proposition.objectif }}</td>
+            <td>{{ proposition.activite }}</td>
+            <td>{{ proposition.observation }}</td>
+            <td>{{ proposition.periodeSouhaite }}</td>
+            <td>{{ proposition.dateCreation }}</td>
             <td>{{ proposition.status }}</td>
+            <td>{{ proposition.formateurPropose }}</td>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-link dropdown-toggle" type="button" id="participantsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="bi bi-people"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="participantsDropdown">
+                  <a class="dropdown-item" *ngFor="let participant of proposition.participants">{{ participant.nomPrenom }}</a>
+                </div>
+              </div>
+            </td>
+
+
+           
             <td>
               <div class="btn-group">
                 <button class="btn btn" (click)="selectPropositionForEdit(proposition)">
@@ -54,14 +86,17 @@
                 <button class="btn btn" (click)="deleteProposition(proposition.idProposition)">
                   <i style="font-size: small; color: red;" class="fas fa-trash"></i>
                 </button>
-                <button class="btn btn" (click)="acceptProposition(proposition.idProposition)">
-                  <i style="font-size: small; color: green;" class="fas fa-check"></i>
-                </button>
-                <button class="btn btn" (click)="refuseProposition(proposition.idProposition)">
-                  <i style="font-size: small; color: red;" class="fas fa-times"></i>
-                </button>
+              <button class="btn btn" (click)="acceptProposition(proposition.idProposition)">
+                <i style="font-size: small; color: green;" class="fas fa-check"></i>
+              </button>
+              <button class="btn btn" (click)="refuseProposition(proposition.idProposition)">
+                <i style="font-size: small; color: red;" class="fas fa-times"></i>
+              </button>
               </div>
             </td>
+
+
+
           </tr>
         </tbody>
       </table>
@@ -91,10 +126,7 @@
                   <label><b>Module:</b></label>
                   <input type="text" class="form-control" [value]="selectedProposition?.module" readonly>
                 </div>
-                <div class="col-md-6">
-                  <label><b>Type:</b></label>
-                  <input type="text" class="form-control" [value]="selectedProposition?.type" readonly>
-                </div>
+                
                 <div class="col-md-6">
                   <label><b>Categorie:</b></label>
                   <input type="text" class="form-control" [value]="selectedProposition?.categorie" readonly>
@@ -106,10 +138,6 @@
                 <div class="col-md-6">
                   <label><b>Proposé par:</b></label>
                   <input type="text" class="form-control" [value]="selectedProposition?.proposePar" readonly>
-                </div>
-                <div class="col-md-6">
-                  <label><b>Nombre d'heures:</b></label>
-                  <input type="text" class="form-control" [value]="selectedProposition?.nbHeures" readonly>
                 </div>
               </div>
             </div>
@@ -138,7 +166,6 @@
           <td>{{ formation.type }}</td>
           <td>{{ formation.categorie }}</td>
           <td>{{ formation.description }}</td>
-          <td>{{ formation.nbHeures }}</td>
           <td>{{ formation.proposePar }}</td>
         </tr>
       </tbody>
@@ -154,7 +181,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form #propositionForm="ngForm" (ngSubmit)="addNewProposition(propositionForm)">
+          <form #propositionForm="ngForm" (ngSubmit)="addNewPropositionFormation(propositionForm)">
             <div class="modal-body">
               <div class="container">
                 <div class="row">
@@ -179,9 +206,47 @@
                     <input type="text" class="form-control" name="proposePar" ngModel required>
                   </div>
                   <div class="col-md-6">
-                    <label>Nombre d'heures:</label>
-                    <input type="number" class="form-control" name="nbHeures" ngModel required>
+                    <label>Poste proposé par:</label>
+                    <input type="text" class="form-control" name="posteProposerPar" ngModel required>
                   </div>
+                  <div class="col-md-6">
+                    <label>Cabinet proposé:</label>
+                    <input type="text" class="form-control" name="cabinetpropo" ngModel>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Département:</label>
+                    <input type="text" class="form-control" name="departement" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Objectif:</label>
+                    <input type="text" class="form-control" name="objectif" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Activité:</label>
+                    <input type="text" class="form-control" name="activite" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Observation:</label>
+                    <input type="text" class="form-control" name="observation" ngModel>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Formateur proposé:</label>
+                    <input type="text" class="form-control" name="formateurPropose" ngModel>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Période souhaitée:</label>
+                    <input type="date" class="form-control" name="prdSouhaite" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Date de création:</label>
+                    <input type="date" class="form-control" name="DateCreation" ngModel required>
+                  </div>
+                 
+                  <div class="col-md-6">
+                    <label for="employeeNames">Employee Names:</label>
+                    <input type="text" class="form-control" name="employeeNames" ngModel required placeholder="Enter names separated by commas">
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -190,10 +255,11 @@
               <button type="submit" class="btn btn-primary" id="new-proposition-save">Save</button>
             </div>
           </form>
-  
         </div>
       </div>
     </div>
+    
+
   
     <!-- Modal: Edit Proposition -->
     <div class="modal fade bd-example-modal-lg" id="editPropositionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">

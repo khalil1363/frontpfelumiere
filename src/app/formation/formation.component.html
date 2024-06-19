@@ -27,8 +27,17 @@
           <th style="text-align: center">type</th>
           <th style="text-align: center">categorie</th>
           <th style="text-align: center">description</th>
-          <th style="text-align: center">nbHeures</th>
           <th style="text-align: center">proposePar</th>
+          <th style="text-align: center">post</th>
+          <th style="text-align: center">cabineFormateur</th>
+          <th style="text-align: center">departement</th>
+          <th style="text-align: center">objectife</th>
+          <th style="text-align: center">formateur propose</th>
+          <th style="text-align: center">observation</th>
+          <th style="text-align: center">budgetPrevisionnel</th>
+          <th style="text-align: center">activite</th>
+       
+          
           <th style="text-align: center">Actions</th>
         </tr>
       </thead>
@@ -38,8 +47,16 @@
           <td>{{ formation.type }}</td>
           <td>{{ formation.categorie }}</td>
           <td>{{ formation.description }}</td>
-          <td>{{ formation.nbHeures }}</td>
           <td>{{ formation.proposePar }}</td>
+          <td>{{ formation.posteProposerPar }}</td>
+          <td>{{ formation.cabinetproposer }}</td>
+          <td>{{ formation.departement }}</td>
+          <td>{{ formation.objectif }}</td>
+          <td>{{ formation.formateurPropose }}</td>
+          <td>{{ formation.observation }}</td>
+          <td>{{ formation.budgetPrevisionnel }}</td>
+          <td>{{formation.activite}}</td>
+
           <td>
             <div class="btn-group">
               <button class="btn btn" (click)="selectFormationForEdit(formation)">
@@ -47,6 +64,9 @@
               </button>
               <button class="btn btn" (click)="deleteFormation(formation.idFormation)">
                 <i style="font-size: small; color: red;" class="fas fa-trash"></i>
+              </button>
+              <button class="btn btn-primary" (click)="addFormationToPlanning(formation?.idFormation)">
+                Add Formation to Planning
               </button>
             </div>
           </td>
@@ -89,7 +109,7 @@
                   <h6 class="pt-2 pb-1 mb-0 text-nowrap">{{ selectedFormation?.module }}</h6>
                   <p class="mb-1">{{ selectedFormation?.categorie }}</p>
                   <p class="mb-1">{{ selectedFormation?.type }}</p>
-                  <p class="mb-1">{{ selectedFormation?.nbHeures }}</p>
+                 
                 </div>
               </div>
             </div>

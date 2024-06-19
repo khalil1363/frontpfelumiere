@@ -1,10 +1,22 @@
 export interface Planning {
     idPlanning?: number;
-    idFormation: number;
-    module: string;
+    module: number;
     departement: string;
-    fonction: string;
-    feedback: string;
-    date: Date;
+    type: string;
+    categorie : string;
+    demandeur: string;
+    posteProposerPar: string;
+    cabinetproposer: string;
+    objectif: string;
+    activite: string;
+    formateur: string;
+    observation: string;
+    budgetPrevisionnel: string;
+    budgetEstimatif: string;
+    statusPlannig: string;
+    coutreel: string;
+    evaluationChaud: string;
+    evaluationFroid: string;
+    dateRealisation: string;
   }
   

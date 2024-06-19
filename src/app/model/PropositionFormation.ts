@@ -1,12 +1,25 @@
+import { Employee } from "./Employee";
+
 export interface PropositionFormation {
-    idProposition: number;
-    module: string;
-    type: string;
-    categorie: string;
-    description: string;
-    nbHeures: string;
-    proposePar: string;
-    isAccepted: boolean;
-    status: string;
-  }
+  idProposition: number;
+  module: string;
+  typePropo: string;
+  categorie: string;
+  description: string;
+  proposePar: string;
+  posteProposerPar: string;
+  cabinetproposer?: string;
+  departement: string;
+  isAccepted: boolean;
+  status: string;
+  objectif: string;
+  activite: string;
+  formateurPropose?: string;
+  observation   ?: string;
+  periodeSouhaite: Date;
+  dateCreation: Date;
+  participants: Employee[];
+
+  //employeeNames:string[];
   
+}

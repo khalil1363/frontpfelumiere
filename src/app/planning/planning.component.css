@@ -1,23 +1,10 @@
 body {
     background: #ffffff;
-    padding-left: 260px; /* Assuming this is for the sidebar width */
-    padding-right: 25px;
     margin-top: 15px;
     margin-bottom: 20px;
 }
 
-.main-content {
-    padding-left: 20px; /* Space between the sidebar and the main content */
-    margin-right: 25px; /* Ensure the right margin is maintained */
-}
 
-.centered-element {
-    margin-left: auto;
-    margin-right: auto;
-    background-color: rgb(255, 255, 255);
-    padding: 10px;
-    width: 400px;
-}
 
 .paginator {
     font-family: 'Lato', sans-serif;

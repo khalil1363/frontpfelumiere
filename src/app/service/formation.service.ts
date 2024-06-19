@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Formation } from '../model/Formation';
 import { environment } from 'src/environments/environment';
+import { Planning } from '../model/Planning';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,13 @@ export class FormationService {
       );
   }
 
+
+  addFormationToPlanning(idFormation: number): Observable<Planning> {
+    const params = new HttpParams().set('idFormation', idFormation.toString());
+    return this.http.post<Planning>(`${this.apiUrl}/addFormationToPlanning`, null, { params });
+  }
+
+
   // Get formation by ID
   getFormationById(id: number): Observable<Formation> {
     const url = `${this.apiUrl}/${id}`;
@@ -32,6 +40,10 @@ export class FormationService {
       );
   }
 
+
+
+
+  
   // Add new formation
   addFormation(formation: Formation): Observable<Formation> {
     const params = new HttpParams()
@@ -40,9 +52,10 @@ export class FormationService {
       .set('categorie', formation.categorie)
       .set('description', formation.description)
       .set('proposePar', formation.proposePar)
-      .set('nbHeures', formation.nbHeures);
+      .set('departement', formation.departement)
+      .set('activite', formation.activite)
 
-    return this.http.post<Formation>(`${this.apiUrl}/add`, null, { params })
+    return this.http.post<Formation>(`${this.apiUrl}/ajouter`, null, { params })
       .pipe(
         tap(data => console.log('Formation added: ', data)),
         catchError(this.handleError)
@@ -58,7 +71,6 @@ export class FormationService {
       .set('categorie', formation.categorie)
       .set('description', formation.description)
       .set('proposePar', formation.proposePar)
-      .set('nbHeures', formation.nbHeures);
 
     return this.http.post<Formation>(`${this.apiUrl}/update`, null, { params })
       .pipe(
@@ -76,7 +88,7 @@ export class FormationService {
       );
   }
 
-  // Error handling
+  // mta3 error
   private handleError(error: HttpErrorResponse): Observable<never> {
     console.error('An error occurred:', error);
     return throwError('Something went wrong; please try again later.');

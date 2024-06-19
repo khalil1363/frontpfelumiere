@@ -17,30 +17,28 @@ export class PlanningService {
   }
 
   public addPlanning(planning: Planning): Observable<Planning> {
-    const date = new Date(planning.date);
+    const date = new Date(planning.dateRealisation);
     const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
 
     const params = new HttpParams()
-      .set('idFormation', planning.idFormation.toString())
+    
       .set('module', planning.module)
       .set('departement', planning.departement)
-      .set('fonction', planning.fonction)
-      .set('feedback', planning.feedback)
+  
       .set('date', formattedDate);
 
     return this.http.post<Planning>(`${this.apiUrl}/add`, {}, { params });
   }
 
   public updatePlanning(planning: Planning): Observable<Planning> {
-    const date = new Date(planning.date);
+    const date = new Date(planning.dateRealisation);
     const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
 
     const params = new HttpParams()
       .set('idPlanning', planning.idPlanning.toString())
       .set('module', planning.module)
       .set('departement', planning.departement)
-      .set('fonction', planning.fonction)
-      .set('feedback', planning.feedback)
+
       .set('date', formattedDate);
 
     return this.http.post<Planning>(`${this.apiUrl}/update`, {}, { params });

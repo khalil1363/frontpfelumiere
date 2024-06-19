@@ -8,6 +8,7 @@ import { NotificationType } from '../enum/notification-type.enum';
 import { PropositionFormation } from '../model/PropositionFormation';
 import { Formation } from '../model/Formation';
 import { FormationService } from '../service/formation.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-proposition-formation',
@@ -63,28 +64,34 @@ export class Propositionformation implements OnInit, OnDestroy {
 
   }
 
-  addNewProposition(propositionForm: NgForm): void {
-    if (propositionForm.valid) {
-      this.propositionService.addNewPropositionFormation(
-        propositionForm.value.module,
-        propositionForm.value.type,
-        propositionForm.value.categorie,
-        propositionForm.value.description,
-        propositionForm.value.proposePar,
-        propositionForm.value.nbHeures
-      ).subscribe(
-        (response) => {
-          this.sendNotification(NotificationType.SUCCESS, 'Proposition added successfully');
-          this.getPropositions(false); // Refresh the proposition list
-          document.getElementById('new-proposition-close').click(); // Close the modal
-          propositionForm.resetForm(); // Clear the form
-        },
-        (error) => {
-          this.sendNotification(NotificationType.ERROR, 'Failed to add proposition');
-        }
+  addNewPropositionFormation(propositionFormationForm: NgForm): void {
+    const formValue = propositionFormationForm.value;
+
+    // Traiter employeeNames comme une liste séparée par des virgules
+    if (formValue.employeeNames && typeof formValue.employeeNames === 'string') {
+      formValue.employeeNames = formValue.employeeNames.split(',').map((name: string) => name.trim());
+    }
+
+    const formData: FormData = this.propositionService.createMouvementFormData(formValue);
+    console.log(formValue);
+
+    if (propositionFormationForm.valid) {
+      this.subscriptions.push(
+        this.propositionService.addPropositionFormation(formData).subscribe(
+          (response: PropositionFormation) => {
+            this.sendNotification(NotificationType.SUCCESS, 'PropositionFormation added successfully');
+            propositionFormationForm.resetForm();
+            this.clickButton('new-proposition-close');
+            this.getPropositions(true);
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.sendNotification(NotificationType.ERROR, 'Failed to add PropositionFormation');
+          }
+        )
       );
     }
   }
+
 
   updateProposition(propositionForm: NgForm): void {
     if (propositionForm.valid && this.selectedProposition) {
@@ -150,18 +157,28 @@ export class Propositionformation implements OnInit, OnDestroy {
     this.selectedProposition = selectedProposition;
     this.clickButton('openPropositionInfo');
   }
+
+
+
+
   acceptProposition(idProposition: number): void {
     this.propositionService.acceptPropositionFormation(idProposition).subscribe(
-      () => {
+      (propositionFormation) => {
         this.sendNotification(NotificationType.SUCCESS, 'Proposition accepted successfully');
-        this.getPropositions(false); // Refresh the proposition list
+        this.getPropositions(false); // Assuming getPropositions is a method to refresh the list
       },
       (error) => {
-        this.sendNotification(NotificationType.ERROR, 'Failed to accept proposition');
+        this.sendNotification(NotificationType.ERROR, `Failed to accept proposition: ${error.message}`);
       }
     );
   }
 
+  
+  
+  
+  
+  
+  
   refuseProposition(idProposition: number): void {
     this.propositionService.refuserPropositionFormation(idProposition).subscribe(
       () => {

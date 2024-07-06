@@ -21,26 +21,20 @@ export class PlanningService {
     const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
 
     const params = new HttpParams()
-    
       .set('module', planning.module)
       .set('departement', planning.departement)
-  
       .set('date', formattedDate);
-
     return this.http.post<Planning>(`${this.apiUrl}/add`, {}, { params });
   }
 
   public updatePlanning(planning: Planning): Observable<Planning> {
     const date = new Date(planning.dateRealisation);
     const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
-
     const params = new HttpParams()
       .set('idPlanning', planning.idPlanning.toString())
       .set('module', planning.module)
       .set('departement', planning.departement)
-
       .set('date', formattedDate);
-
     return this.http.post<Planning>(`${this.apiUrl}/update`, {}, { params });
   }
 

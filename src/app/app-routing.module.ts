@@ -20,6 +20,12 @@ import { FormationComponent } from './formation/formation.component';
 import { StagierComponent } from './stagiaire/stagiaire.component';
 import { Propositionformation } from './propositionformation/propositionformation.component';
 import { PlanningComponent } from './planning/planning.component';
+import { DashbordFormationComponent } from './formationDashbord/DashbordFormation.component';
+import { cabineComponent } from './chart/cabine/cabine.component';
+import { CandidatComponent } from './Candidat/Candidat.component';
+import { propositionOffresComponent } from './propositionOffres/propositionOffres.component';
+import { offresEmploiComponent } from './offresEmploi/offresEmploi.component';
+import { RecruitmentComponent } from './Recruitment/Recruitment.component';
 
 
 
@@ -34,12 +40,18 @@ const routes: Routes = [
   {path : 'profile' , component : ProfileComponent } ,
   {path : 'pickliste' , component : PicklisteComponent } ,
   {path : 'dashbord-chart' , component : DashbordChartComponent } ,
+  {path : 'dashbord-formation' , component : DashbordFormationComponent } ,
   {path : '' , redirectTo : '/acceuil' , pathMatch : 'full'},
   {path : 'side-nav' , component : SidenavigationComponent },
   {path : 'acceuil' , component : AcceuilPageComponent },
   {path : 'formation' , component : FormationComponent },
   {path : 'propositionformation' , component : Propositionformation },
   {path : 'planning' , component : PlanningComponent },
+  {path : 'candidat' , component : CandidatComponent },
+  {path : 'propooffre' , component : propositionOffresComponent },
+  {path : 'offre' , component : offresEmploiComponent },
+  {path : 'recretemnt' , component : RecruitmentComponent }
+
 ];
 
 @NgModule({

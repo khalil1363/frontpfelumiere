@@ -9,9 +9,7 @@
           <form class="form-inline my-2 my-lg-0 justify-content-center">
             <input name="searchTerm" class="form-control mr-sm-2" ngModel type="search" placeholder="Search plannings ...">
           </form>
-          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addPlanningModal">
-            <i class="fa fa-plus"></i> New Planning
-          </button>
+        
         </div>
         <div class="btn-group">
           <button type="button" class="btn btn-info" (click)="getPlannings(true)">
@@ -38,12 +36,13 @@
                 <th style="text-align:center">Formateur</th>
                 <th style="text-align:center">Observation</th>
                 <th style="text-align:center">Budget Prévisionnel</th>
-                <th style="text-align:center">Budget Estimatif</th>
+                <th style="text-align:center">CNFCPP</th>
                 <th style="text-align:center">Status Planning</th>
                 <th style="text-align:center">Coût Réel</th>
                 <th style="text-align:center">Évaluation Chaud</th>
                 <th style="text-align:center">Évaluation Froid</th>
                 <th style="text-align:center">Date de Réalisation</th>
+                <th style="text-align:center">nombre de jours</th>
                 <th style="text-align:center">Actions</th>
               </tr>
             </thead>
@@ -67,6 +66,7 @@
                 <td>{{ planning.evaluationChaud }}</td>
                 <td>{{ planning.evaluationFroid }}</td>
                 <td>{{ planning.dateRealisation | date }}</td>
+                <td>{{planning.nbj}}</td>
                 <td>
                   <div class="btn-group">
                     <button class="btn btn" (click)="selectPlanningForEdit(planning)">
@@ -83,54 +83,7 @@
         </div>
       </div>
       
-      
-
-  <!-- Add Planning Modal -->
-  <div class="modal fade" id="addPlanningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Add Planning</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form #planningForm="ngForm" (ngSubmit)="addNewPlanning(planningForm)">
-          <div class="modal-body">
-            
-            <div class="form-group">
-              <label for="idFormation">ID Formation</label>
-              <input type="number" class="form-control" id="idFormation" name="idFormation" ngModel required>
-            </div>
-            <div class="form-group">
-              <label for="module">Module</label>
-              <input type="text" class="form-control" id="module" name="module" ngModel required>
-            </div>
-            <div class="form-group">
-              <label for="departement">Departement</label>
-              <input type="text" class="form-control" id="departement" name="departement" ngModel required>
-            </div>
-            <div class="form-group">
-              <label for="fonction">Fonction</label>
-              <input type="text" class="form-control" id="fonction" name="fonction" ngModel required>
-            </div>
-            <div class="form-group">
-              <label for="feedback">Feedback</label>
-              <input type="text" class="form-control" id="feedback" name="feedback" ngModel>
-            </div>
-            <div class="form-group">
-              <label for="date">Date</label>
-              <input type="date" class="form-control" id="date" name="date" ngModel required>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+     
 
   <!-- Edit Planning Modal -->
   <div class="modal fade" id="editPlanningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

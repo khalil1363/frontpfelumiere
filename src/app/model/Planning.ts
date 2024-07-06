@@ -17,6 +17,8 @@ export interface Planning {
     coutreel: string;
     evaluationChaud: string;
     evaluationFroid: string;
-    dateRealisation: string;
+    dateRealisation: Date;
+    dateend:Date;
+    nbj:string;
   }
   

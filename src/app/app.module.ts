@@ -33,6 +33,18 @@ import { StagierComponent } from './stagiaire/stagiaire.component';
 import { placements } from '@popperjs/core';
 import { Propositionformation } from './propositionformation/propositionformation.component';
 import { PlanningComponent } from './planning/planning.component';
+import { cabineComponent } from './chart/cabine/cabine.component';
+import { DashbordFormationComponent } from './formationDashbord/DashbordFormation.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { typeformationComponent } from './chart/typeformation/typeformation.component';
+import { actionreliseComponent } from './chart/actionrelise/actionrelise.component';
+import { nbrhromponent } from './chart/nbr-hr/nbr-hr.component';
+import { Candidat } from './model/Candidat';
+import { CandidatComponent } from './Candidat/Candidat.component';
+import { propositionOffresComponent } from './propositionOffres/propositionOffres.component';
+import { offresEmploiComponent } from './offresEmploi/offresEmploi.component';
+import { RecruitmentComponent } from './Recruitment/Recruitment.component';
+import { txcomponent } from './chart/tx/tx.component';
 
 
 
@@ -53,7 +65,18 @@ import { PlanningComponent } from './planning/planning.component';
     AcceuilPageComponent,
     stageComponent,
     Propositionformation,
-    PlanningComponent
+    PlanningComponent,
+    DashbordFormationComponent,
+    cabineComponent,
+    typeformationComponent,
+    actionreliseComponent,
+    nbrhromponent,
+    cabineComponent,
+    CandidatComponent,
+    propositionOffresComponent,
+    offresEmploiComponent,
+    RecruitmentComponent,
+    txcomponent
     
   ],
   imports: [
@@ -69,7 +92,8 @@ import { PlanningComponent } from './planning/planning.component';
     NgChartsModule,
     MatAutocompleteModule,
     MatInputModule,
-    ReactiveFormsModule,    
+    ReactiveFormsModule,   
+    NgApexchartsModule, 
   ],
   providers: [NotificationService , AuthenticationGuard ,AuthenticationService , UserService ,
      { provide :HTTP_INTERCEPTORS , useClass : AuthInterceptor , multi :true }] ,

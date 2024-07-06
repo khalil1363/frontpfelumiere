@@ -7,6 +7,7 @@ import { NotificationService } from '../service/notification.service';
 import { Subscription } from 'rxjs';
 import { Stage } from '../model/Stage';
 import { StageService } from '../service/stage.service';
+
 @Component({
   selector: 'app-stage',
   templateUrl: './stage.component.html',

@@ -42,3 +42,18 @@ body{
     outline: none;
     background: #d4d4d4;
 }
+
+.status-accepted {
+    background-color: green;
+    color: white; /* Optional: Set text color */
+  }
+  
+  .status-rejected {
+    background-color: red;
+    color: white; /* Optional: Set text color */
+  }
+  
+  .status-enattente {
+    background-color: yellow;
+    color: black; /* Optional: Set text color */
+  }

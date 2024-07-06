@@ -9,10 +9,10 @@
             (ngModelChange)="searchPropositions(searchForm.value)" placeholder="Search propositions ...">
         </form>
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addPropositionModal">
-          <i class="fa fa-plus"></i> New Proposition
+          <i class="fa fa-plus"></i> ajouter une poposition de formation
         </button>
         <button style="margin-left: 10px;" type="button" class="btn btn-info" (click)="toggleExistingFormations()">
-          <i class="fa fa-list"></i> View Existing Formations
+          <i class="fa fa-list"></i> liste de Formations
         </button>
       </div>
       <div class="btn-group">
@@ -63,7 +63,9 @@
             <td>{{ proposition.observation }}</td>
             <td>{{ proposition.periodeSouhaite }}</td>
             <td>{{ proposition.dateCreation }}</td>
-            <td>{{ proposition.status }}</td>
+            <td [ngClass]="getStatusClass(proposition.status)">
+              {{ proposition.status }}
+            </td>
             <td>{{ proposition.formateurPropose }}</td>
             <td>
               <div class="dropdown">
@@ -119,8 +121,8 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <div class="container">
+          <div class="container">
+              <div class="modal-body">
               <div class="row">
                 <div class="col-md-6">
                   <label><b>Module:</b></label>
@@ -153,23 +155,39 @@
       <thead class="table-borderless">
         <tr class="text-center" style="text-align: center; font-size: small;">
           <th style="text-align: center">Module</th>
-          <th style="text-align: center">Type</th>
-          <th style="text-align: center">Categorie</th>
-          <th style="text-align: center">Description</th>
-          <th style="text-align: center">NbHeures</th>
-          <th style="text-align: center">ProposePar</th>
+          <th style="text-align: center">type</th>
+          <th style="text-align: center">categorie</th>
+          <th style="text-align: center">description</th>
+          <th style="text-align: center">proposePar</th>
+          <th style="text-align: center">post</th>
+          <th style="text-align: center">cabineFormateur</th>
+          <th style="text-align: center">departement</th>
+          <th style="text-align: center">objectife</th>
+          <th style="text-align: center">formateur propose</th>
+          <th style="text-align: center">observation</th>
+          <th style="text-align: center">budgetPrevisionnel</th>
+          <th style="text-align: center">activite</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let formation of existingFormations" class="text-center">
-          <td>{{ formation.module }}</td>
+          <td>{{ formation.module}}</td>
           <td>{{ formation.type }}</td>
           <td>{{ formation.categorie }}</td>
           <td>{{ formation.description }}</td>
           <td>{{ formation.proposePar }}</td>
+          <td>{{ formation.posteProposerPar }}</td>
+          <td>{{ formation.cabinetproposer }}</td>
+          <td>{{ formation.departement }}</td>
+          <td>{{ formation.objectif }}</td>
+          <td>{{ formation.formateurPropose }}</td>
+          <td>{{ formation.observation }}</td>
+          <td>{{ formation.budgetPrevisionnel }}</td>
+          <td>{{formation.activite}}</td>
         </tr>
       </tbody>
     </table>
+  
   </div>
     <!-- Modal: Add New Proposition -->
     <div class="modal fade bd-example-modal-lg" id="addPropositionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -275,32 +293,68 @@
             <div class="modal-body">
               <div class="container">
                 <div class="row">
-                  <div class="form-group">
-                    <label for="Module:">Module:</label>
-                    <input type="text" name="Module:" ngModel required class="form-control">
+                  <div class="col-md-6">
+                    <label>Module:</label>
+                    <input type="text" class="form-control" name="module" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Type:</label>
+                    <input type="text" class="form-control" name="type" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Categorie:</label>
+                    <input type="text" class="form-control" name="categorie" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Description:</label>
+                    <textarea class="form-control" rows="3" name="description" ngModel required></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Proposé par:</label>
+                    <input type="text" class="form-control" name="proposePar" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Poste proposé par:</label>
+                    <input type="text" class="form-control" name="posteProposerPar" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Cabinet proposé:</label>
+                    <input type="text" class="form-control" name="cabinetpropo" ngModel>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Département:</label>
+                    <input type="text" class="form-control" name="departement" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Objectif:</label>
+                    <input type="text" class="form-control" name="objectif" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Activité:</label>
+                    <input type="text" class="form-control" name="activite" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Observation:</label>
+                    <input type="text" class="form-control" name="observation" ngModel>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Formateur proposé:</label>
+                    <input type="text" class="form-control" name="formateurPropose" ngModel>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Période souhaitée:</label>
+                    <input type="date" class="form-control" name="prdSouhaite" ngModel required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Date de création:</label>
+                    <input type="date" class="form-control" name="DateCreation" ngModel required>
+                  </div>
+                 
+                  <div class="col-md-6">
+                    <label for="employeeNames">Employee Names:</label>
+                    <input type="text" class="form-control" name="employeeNames" ngModel required placeholder="Enter names separated by commas">
                   </div>
 
-                  <div class="form-group">
-                    <label for="Type:">Type:</label>
-                    <input type="text" name="Type:" ngModel required class="form-control">
-                  </div>
-              
-                  <div class="form-group">
-                    <label for="Categorie:">Categorie:</label>
-                    <input type="text" name="Categorie:" ngModel required class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="Description:">Description:</label>
-                    <input type="text" name="Description:" ngModel required class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="proposePar:">Proposé par:</label>
-                    <input type="text" name="proposePar:" ngModel required class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="nbHeures:">nbHeures:</label>
-                    <input type="text" name="nbHeures:" ngModel required class="form-control">
-                  </div>
                 </div>
               </div>
             </div>

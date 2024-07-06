@@ -25,13 +25,23 @@ export class Propositionformation implements OnInit, OnDestroy {
   p: number = 1;
   itemsPerPage: number = 6;
   totalElements: any;
-
+  allEmployees: { name: string }[] = [];
   constructor(private propositionService: PropositionFormationService, private formationService: FormationService,
     private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.getPropositions(true);
+
+    this.propositionService.getAllEmployees().subscribe(
+      (employees) => {
+        this.allEmployees = employees;
+      },
+      (error) => {
+        console.error('Failed to fetch employees', error);
+      }
+    );
   }
+  
 
   public saveNewProposition(): void {
     this.clickButton('new-proposition-save');
@@ -66,15 +76,14 @@ export class Propositionformation implements OnInit, OnDestroy {
 
   addNewPropositionFormation(propositionFormationForm: NgForm): void {
     const formValue = propositionFormationForm.value;
-
-    // Traiter employeeNames comme une liste séparée par des virgules
-    if (formValue.employeeNames && typeof formValue.employeeNames === 'string') {
-      formValue.employeeNames = formValue.employeeNames.split(',').map((name: string) => name.trim());
+  
+    // Convert selected employees to an array if it's a string
+    if (typeof formValue.employeeNames === 'string') {
+      formValue.employeeNames = formValue.employeeNames.split(',').map(name => name.trim());
     }
-
+  
     const formData: FormData = this.propositionService.createMouvementFormData(formValue);
-    console.log(formValue);
-
+  
     if (propositionFormationForm.valid) {
       this.subscriptions.push(
         this.propositionService.addPropositionFormation(formData).subscribe(
@@ -91,7 +100,19 @@ export class Propositionformation implements OnInit, OnDestroy {
       );
     }
   }
-
+  
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'ACCEPTED':
+        return 'status-accepted';
+      case 'REJECTED':
+        return 'status-rejected';
+      case 'EN_ATTENTE':
+        return 'status-enattente';
+      default:
+        return '';
+    }
+  }
 
   updateProposition(propositionForm: NgForm): void {
     if (propositionForm.valid && this.selectedProposition) {

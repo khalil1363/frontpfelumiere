@@ -14,7 +14,7 @@
       (ngModelChange)="searchUsers(searchForm.value)"   placeholder="Search users ... " >
     </form>
     <button  [hidden]="!isAdminOrManager"  type="button" class="btn btn-info" data-toggle="modal" data-target="#addUserModal">
-    <i class="fa fa-plus"d></i> New User
+    <i class="fa fa-plus"d></i> ajouter User
     </button>
     </div>
     <div class="btn-group">
@@ -33,9 +33,9 @@
     <tr class="text-center"  style="text-align:center ; font-size:small" >
     <th style="text-align:center">Photo</th>
     <th style="text-align:center">Matricule</th>
-    <th style="text-align:center">First Name</th>
-    <th style="text-align:center">Last Name</th>
-    <th style="text-align:center">Username</th>
+    <th style="text-align:center">nom</th>
+    <th style="text-align:center">Prenom</th>
+    <th style="text-align:center">nom d'utilisateur</th>
     <th style="text-align:center" >Email </th>
     <th style="text-align:center">Status</th>
     <th style="text-align:center">Actions</th>

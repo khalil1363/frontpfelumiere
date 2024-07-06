@@ -8,22 +8,22 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PropositionFormationService {
+  private tt = environment.apiUrl + '/employees';
   private baseUrl = environment.apiUrl + '/propositionsformations'; 
   constructor(private http: HttpClient) {}
   getAllPropositionFormations(): Observable<PropositionFormation[]> {
     return this.http.get<PropositionFormation[]>(`${this.baseUrl}/list`);
   }
   
- 
+  getAllEmployees(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.tt}/list`);
+  }
 
-  // Méthode pour formater la date au format yyyy-MM-dd
   formatDate(date: Date): string {
-    // Ensure 'date' is a valid Date object
     if (!(date instanceof Date)) {
       date = new Date(date);
     }
 
-    // Format the date as yyyy-MM-dd
     const year = date.getFullYear();
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
@@ -31,16 +31,16 @@ export class PropositionFormationService {
     return `${year}-${month}-${day}`;
   }
 
-  // Méthode pour envoyer le FormData au backend
+
+
+
   addPropositionFormation(formData: FormData): Observable<PropositionFormation> {
     return this.http.post<PropositionFormation>(`${this.baseUrl}/add`, formData);
   }
 
-  // Méthode pour créer un FormData à partir de l'objet propositionFormation
   public createMouvementFormData(propositionFormation: any): FormData {
     const formData = new FormData();
 
-    // Ajout de chaque champ au FormData
     formData.append('module', propositionFormation.module);
     formData.append('type', propositionFormation.type);
     formData.append('categorie', propositionFormation.categorie);

@@ -10,7 +10,6 @@ import {
 } from "ng-apexcharts";
 import { Planning } from "src/app/model/Planning";
 import { PlanningService } from "src/app/service/planning.service";
-
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
@@ -34,7 +33,8 @@ export class txcomponent implements OnInit {
 
   constructor(private planningService: PlanningService, private http: HttpClient) {
     this.chartOptions = {
-      series: [0],
+      
+      series: [0] ,
       chart: {
         height: 350,
         type: "radialBar",
@@ -119,7 +119,7 @@ export class txcomponent implements OnInit {
     if (realiserPlannings.length > 0) {
 
 
-      let totalDays = 0;
+      let totalDays = 0.00;
       realiserPlannings.forEach(p => {
        
        
@@ -133,11 +133,11 @@ export class txcomponent implements OnInit {
         if(h==0)
           console.log("impo")
 else
-        totalDays += x/h;
+        totalDays += (x/h);
       });
       console.log(totalDays)
 
-      this.avgDays = totalDays;
+      this.avgDays = Math.round(totalDays*1000)/1000;
 
 
 

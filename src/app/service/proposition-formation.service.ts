@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { PropositionFormation } from '../model/PropositionFormation';
 import { environment } from 'src/environments/environment';
+import { Employee } from '../model/Employee';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,6 +20,19 @@ export class PropositionFormationService {
     return this.http.get<any[]>(`${this.tt}/list`);
   }
 
+  getEmployeeByMat(mat: string): Observable<Employee> {
+    return this.http.get<Employee>(`${this.tt}/mat/${mat}`);
+  }
+
+
+
+
+
+
+
+
+
+  
   formatDate(date: Date): string {
     if (!(date instanceof Date)) {
       date = new Date(date);

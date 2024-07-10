@@ -39,6 +39,7 @@
     "jquery": "^3.7.0",
     "ng-apexcharts": "^1.5.12",
     "ng-charts": "^1.0.0-alpha",
+    "ng-zorro-antd": "^14.1.1",
     "ng2-charts": "^4.1.1",
     "ngx-pagination": "^6.0.3",
     "rxjs": "~7.5.0",

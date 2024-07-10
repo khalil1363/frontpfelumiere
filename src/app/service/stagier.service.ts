@@ -20,7 +20,7 @@ export class StagierService {
   }
 
   getAllStagiers(): Observable<Stagier[]> {
-    return this.http.get<Stagier[]>(this.baseUrl);
+    return this.http.get<Stagier[]>(`${this.baseUrl}/list`);
   }
   getSupervisorsByName(name: string): Observable<Employee[]> {
     return this.http.get<Employee[]>(`http://localhost:8080/api/employees/supervisors?name=${name}`);

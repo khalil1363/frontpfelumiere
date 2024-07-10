@@ -26,6 +26,7 @@ import { CandidatComponent } from './Candidat/Candidat.component';
 import { propositionOffresComponent } from './propositionOffres/propositionOffres.component';
 import { offresEmploiComponent } from './offresEmploi/offresEmploi.component';
 import { RecruitmentComponent } from './Recruitment/Recruitment.component';
+import { vesiteComponent } from './vesite/vesite.component';
 
 
 
@@ -50,7 +51,8 @@ const routes: Routes = [
   {path : 'candidat' , component : CandidatComponent },
   {path : 'propooffre' , component : propositionOffresComponent },
   {path : 'offre' , component : offresEmploiComponent },
-  {path : 'recretemnt' , component : RecruitmentComponent }
+  {path : 'recretemnt' , component : RecruitmentComponent },
+  {path : 'vesite' , component : vesiteComponent }
 
 ];
 

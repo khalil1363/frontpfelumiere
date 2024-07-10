@@ -9,6 +9,8 @@ import { PropositionFormation } from '../model/PropositionFormation';
 import { Formation } from '../model/Formation';
 import { FormationService } from '../service/formation.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NzSelectSizeType } from 'ng-zorro-antd/select';
+import { Employee } from '../model/Employee';
 
 @Component({
   selector: 'app-proposition-formation',
@@ -26,6 +28,21 @@ export class Propositionformation implements OnInit, OnDestroy {
   itemsPerPage: number = 6;
   totalElements: any;
   allEmployees: { name: string }[] = [];
+
+///////////
+
+
+
+listOfOption: Array<{ label: string; value: string }> = [];
+size: NzSelectSizeType = 'default';
+singleValue = 'a10';
+multipleValue = ['a10', 'c12'];
+tagValue = [];
+
+/////
+
+
+
   constructor(private propositionService: PropositionFormationService, private formationService: FormationService,
     private notificationService: NotificationService) { }
 
@@ -40,6 +57,12 @@ export class Propositionformation implements OnInit, OnDestroy {
         console.error('Failed to fetch employees', error);
       }
     );
+
+
+  
+
+    this.getemploye(true)
+
   }
   
 
@@ -57,6 +80,7 @@ export class Propositionformation implements OnInit, OnDestroy {
       this.propositionService.getAllPropositionFormations().subscribe(
         (response) => {
           this.propositions = response;
+          
           this.refreshing = true;
           if (showNotification) {
             this.sendNotification(NotificationType.SUCCESS, 'Propositions loaded successfully');
@@ -70,16 +94,59 @@ export class Propositionformation implements OnInit, OnDestroy {
     );
   }
 
+
+
+
+
+
+  public getemploye(showNotification: boolean): void {
+    this.refreshing = true;
+    this.subscriptions.push(
+      this.propositionService.getAllEmployees().subscribe(
+        (response) => {
+          const children: Array<{ label: string; value: string }> = [];
+          response.forEach((emp: Employee) =>{
+            children.push({ label: emp.nomPrenom, value: emp.nomPrenom });
+
+          })
+          this.listOfOption = children;
+
+          this.refreshing = true;
+          if (showNotification) {
+            this.sendNotification(NotificationType.SUCCESS, 'empl loaded successfully');
+          }
+        },
+        (error) => {
+          this.refreshing = false;
+          this.sendNotification(NotificationType.ERROR, 'Failed to load propositions');
+        }
+      )
+    );
+  }
+
+
+
+
+
+
+
+
+
+
   public searchPropositions(searchTerm: string): void {
 
   }
 
   addNewPropositionFormation(propositionFormationForm: NgForm): void {
+    if (this.tagValue.length == 0) {
+      return console.log("t3ada")
+    }
+
     const formValue = propositionFormationForm.value;
   
     // Convert selected employees to an array if it's a string
     if (typeof formValue.employeeNames === 'string') {
-      formValue.employeeNames = formValue.employeeNames.split(',').map(name => name.trim());
+      formValue.employeeNames = this.tagValue.join(",")
     }
   
     const formData: FormData = this.propositionService.createMouvementFormData(formValue);

@@ -184,13 +184,14 @@
           <td>{{ formation.observation }}</td>
           <td>{{ formation.budgetPrevisionnel }}</td>
           <td>{{formation.activite}}</td>
+          
         </tr>
       </tbody>
     </table>
   
   </div>
     <!-- Modal: Add New Proposition -->
-    <div class="modal fade bd-example-modal-lg" id="addPropositionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div style="z-index:1" class="modal fade bd-example-modal-lg" id="addPropositionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -260,11 +261,13 @@
                     <input type="date" class="form-control" name="DateCreation" ngModel required>
                   </div>
                  
-                  <div class="col-md-6">
-                    <label for="employeeNames">Employee Names:</label>
-                    <input type="text" class="form-control" name="employeeNames" ngModel required placeholder="Enter names separated by commas">
-                  </div>
-
+                  
+                    <label>employeeNames:</label>
+                    <nz-select name="employeeNames" style="z-index:9999" [(ngModel)]="tagValue" [nzSize]="size" nzMode="tags" nzPlaceHolder="employee">
+                      <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+                    </nz-select>
+                  
+                  
                 </div>
               </div>
             </div>

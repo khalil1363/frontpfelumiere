@@ -6,4 +6,6 @@ export interface Employee {
     site: string;
     tel: string;
     mat: string;
+    post:string;
+    
   }

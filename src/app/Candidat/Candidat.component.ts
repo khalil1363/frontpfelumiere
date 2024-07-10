@@ -5,6 +5,8 @@ import { CandidatService } from '../service/candidat.service';
 import { NotificationService } from '../service/notification.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { OffreEmploiService } from '../service/offre-emploi-service.service';
+import { OffreEmploi } from '../model/OffreEmploi';
 
 
 
@@ -19,9 +21,11 @@ export class CandidatComponent implements OnInit {
   candidats: Candidat[];
   selectedCandidat: Candidat;
   refreshing: boolean;
+  offresEmploi: OffreEmploi[];
+
   private subscriptions: Subscription[] = [];
 
-  constructor(private candidatService: CandidatService,
+  constructor(private candidatService: CandidatService, private offreEmploiService: OffreEmploiService,
     private notificationService: NotificationService) { }
 
   ngOnInit(): void {
@@ -29,7 +33,16 @@ export class CandidatComponent implements OnInit {
     
   }
 
-  
+  getOffresEmploi(): void {
+    this.offreEmploiService.getAllOffresEmploi().subscribe(
+      (response: OffreEmploi[]) => {
+        this.offresEmploi = response;
+      },
+      (error) => {
+        this.notificationService.notify(NotificationType.ERROR, 'Failed to fetch offres emploi');
+      }
+    );
+  }
 
   deleteCan(idCandidats: number): void {
     if (confirm('Are you sure you want to delete this stage?')) {

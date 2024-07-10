@@ -46,6 +46,8 @@ import { offresEmploiComponent } from './offresEmploi/offresEmploi.component';
 import { RecruitmentComponent } from './Recruitment/Recruitment.component';
 import { txcomponent } from './chart/tx/tx.component';
 
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { vesiteComponent } from './vesite/vesite.component';
 
 
 @NgModule({
@@ -76,7 +78,8 @@ import { txcomponent } from './chart/tx/tx.component';
     propositionOffresComponent,
     offresEmploiComponent,
     RecruitmentComponent,
-    txcomponent
+    txcomponent,
+    vesiteComponent
     
   ],
   imports: [
@@ -94,6 +97,7 @@ import { txcomponent } from './chart/tx/tx.component';
     MatInputModule,
     ReactiveFormsModule,   
     NgApexchartsModule, 
+    NzSelectModule
   ],
   providers: [NotificationService , AuthenticationGuard ,AuthenticationService , UserService ,
      { provide :HTTP_INTERCEPTORS , useClass : AuthInterceptor , multi :true }] ,

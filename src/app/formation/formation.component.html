@@ -1,3 +1,6 @@
+<div>
+  <app-sidenavigation></app-sidenavigation>
+</div>
 <body>
   <i style="color: blue; font-size: 20px;" class="fas fa-user"></i>
   <span class="text" style="color: blue; font-size: large;">Gestion des formations :</span>
@@ -184,22 +187,66 @@
         </button>
       </div>
       <div class="modal-body">
-        <form (ngSubmit)="updateFormation(editFormationForm)" #editFormationForm="ngForm">
+        <form  #editFormationForm="ngForm" (click)="updaterec(editFormationForm)">
+         
+         
+         
+          <div class="form-group">
+            <label for="idFormation">idFormation</label>         
+            <input type="text" class="form-control" id="idFormation" name="idFormation"  [(ngModel)]="ed.idFormation" required>
+          </div>
+         
           <div class="form-group">
             <label for="module">Module</label>         
-            <input type="text" class="form-control" id="module" name="module" ngModel required>
+            <input type="text" class="form-control" id="module" name="module" [(ngModel)]="ed.module" required>
+          </div>
+          <div class="form-group">
+            <label for="module">type</label>         
+            <input type="text" class="form-control" id="type" name="type" [(ngModel)]="ed.type" required>
           </div>
           <div class="form-group">
             <label for="categorie">Categorie</label>
-            <input type="text" class="form-control" id="categorie" name="categorie" ngModel required>
+            <input type="text" class="form-control" id="categorie" name="categorie" [(ngModel)]="ed.categorie" required>
           </div>
           <div class="form-group">
-            <label for="type">Type</label>
-            <input type="text" class="form-control" id="type" name="type" ngModel required>
+            <label for="description">description</label>
+            <input type="text" class="form-control" id="description" name="description" [(ngModel)]="ed.description" required>
           </div>
           <div class="form-group">
-            <label for="duree">Durée</label>
-            <input type="text" class="form-control" id="duree" name="duree" ngModel required>
+            <label for="proposePar">proposePar</label>         
+            <input type="text" class="form-control" id="proposePar" name="proposePar" [(ngModel)]="ed.proposePar" required>
+          </div>
+          <div class="form-group">
+            <label for="posteProposerPar">posteProposerPar</label>         
+            <input type="text" class="form-control" id="posteProposerPar" name="posteProposerPar" [(ngModel)]="ed.posteProposerPar" required>
+          </div>
+          <div class="form-group">
+            <label for="cabinetproposer">cabinetproposer</label>         
+            <input type="text" class="form-control" id="cabinetproposer" name="cabinetproposer" [(ngModel)]="ed.cabinetproposer" required>
+          </div>
+          <div class="form-group">
+            <label for="departement">departement</label>         
+            <input type="text" class="form-control" id="departement" name="departement" [(ngModel)]="ed.departement" required>
+          </div>
+          <div class="form-group">
+            <label for="objectif">objectif</label>         
+            <input type="text" class="form-control" id="objectif" name="objectif" [(ngModel)]="ed.objectif" required>
+          </div>
+          <div class="form-group">
+            <label for="activite">activite</label>         
+            <input type="text" class="form-control" id="activite" name="activite" [(ngModel)]="ed.activite" required>
+          </div>
+          <div class="form-group">
+            <label for="formateurPropose">formateurPropose</label>         
+            <input type="text" class="form-control" id="formateurPropose" name="formateurPropose" [(ngModel)]="ed.formateurPropose" required>
+          </div>
+          <div class="form-group">
+            <label for="observation">observation</label>         
+            <input type="text" class="form-control" id="observation" name="observation" [(ngModel)]="ed.observation" required>
+          </div>
+          <div class="form-group">
+            <label for="observation">budgetPrevisionnel</label>         
+            <input type="text" class="form-control" id="budgetPrevisionnel" name="budgetPrevisionnel" [(ngModel)]="ed.budgetPrevisionnel" required>
           </div>
           <button type="submit" class="btn btn-primary">Update Formation</button>
         </form>
@@ -209,7 +256,4 @@
       </div>      
     </div>
   </div>
-</div>
-<div>
-  <app-sidenavigation></app-sidenavigation>
 </div>

@@ -21,6 +21,7 @@ export class vesiteComponent implements OnInit , OnDestroy  {
   public selectedVisiteMedicale: VisiteMedicale;
   public refreshing: boolean;
   public employee: Employee;
+  public recapData: any[];
   p: number = 1;
   itemsPerPage: number = 6;
   totalElements: any;
@@ -31,6 +32,29 @@ export class vesiteComponent implements OnInit , OnDestroy  {
     private propositionService: PropositionFormationService
   ) {}
 
+  VisiteMedicale= {
+    id: 0,
+    mat: "",
+    ste: "",
+    nomPrenom: "",
+    post: "",
+    site: "",
+    dateEmbauche:"" ,
+    typeDeSuivi: "",
+    typeDeVisite: "",
+    dateVisite: "" ,
+    renouvelle: "",
+    commentaire: "",
+    observation: ""
+  }
+
+
+
+
+
+
+
+
   ngOnInit(): void {
     this.getVisitesMedicales(true);
   }
@@ -40,6 +64,7 @@ export class vesiteComponent implements OnInit , OnDestroy  {
     this.subscriptions.push(
       this.visiteMedicaleService.getAllVisitesMedicales().subscribe(
         (response) => {
+          console.log('Visites Medicales Loaded:', response); 
           this.visiteMedicaleService.addVisitesMedicalesToLocalCache(response);
           this.visitesMedicales = response;
           this.refreshing = false;
@@ -54,6 +79,7 @@ export class vesiteComponent implements OnInit , OnDestroy  {
       )
     );
   }
+  
 
   onMatChange(mat: string): void {
     if (mat) {
@@ -104,6 +130,30 @@ export class vesiteComponent implements OnInit , OnDestroy  {
       );
     }
   }
+  update(): void {
+    
+      this.visiteMedicaleService.addVisiteMedicale(this.VisiteMedicale).subscribe(
+        (response) => {
+          this.sendNotification(NotificationType.SUCCESS, 'Visite médicale added successfully');
+          this.getVisitesMedicales(false);
+          document.getElementById('new-user-close').click();
+         
+        },
+        (error) => {
+          this.sendNotification(NotificationType.ERROR, 'Failed to add visite médicale');
+        }
+      );
+    
+  }
+
+
+
+edit(i:any){
+this.VisiteMedicale=i;
+}
+
+
+
 
   updateVisiteMedicale(visiteMedicaleForm: NgForm): void {
     if (visiteMedicaleForm.valid && this.selectedVisiteMedicale) {
@@ -120,11 +170,10 @@ export class vesiteComponent implements OnInit , OnDestroy  {
       );
     }
   }
-
-  selectVisiteMedicaleForEdit(visiteMedicale: VisiteMedicale): void {
-    this.selectedVisiteMedicale = { ...visiteMedicale };
-    this.clickButton('openVisiteMedicaleEdit');
+  public editvesiteinfo(editvesite: VisiteMedicale): void {
+    this.clickButton('openvesiteEdit');
   }
+
 
   deleteVisiteMedicale(visiteMedicaleId: number): void {
     if (confirm('Are you sure you want to delete this visite médicale?')) {
@@ -160,4 +209,12 @@ export class vesiteComponent implements OnInit , OnDestroy  {
     this.selectedVisiteMedicale = selectedVisiteMedicale;
     this.clickButton('openVisiteMedicaleInfo');
   }
+
+
+
+
+
+
+ 
+ 
 }

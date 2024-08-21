@@ -33,6 +33,7 @@ export class StagierService {
       .set('diplome', stagierData.diplome)
       .set('specialite', stagierData.specialite)
       .set('cin', stagierData.cin)
+      .set('societe', stagierData.societe)
       .set('tel', stagierData.tel)
       .set('superviseurMatricule', stagierData.superviseurMatricule)
       .set('stageRef', stagierData.stageRef);
@@ -80,6 +81,26 @@ export class StagierService {
   return null ;
   } 
 
+  public createMouvementFormData(propositionFormation: any,): FormData {
+    const formData = new FormData();
+    formData.append('cin', propositionFormation.cin);
+    formData.append('nomPrenom', propositionFormation.nomPrenom);
+   
+    formData.append('societe', propositionFormation.societe);
+    formData.append('institut', propositionFormation.institut);
+
+    formData.append('diplome', propositionFormation.diplome);
+    formData.append('specialite', propositionFormation.specialite);
+    formData.append('tel', propositionFormation.tel);
+    formData.append('superviseurMatricule', propositionFormation.superviseurMatricule);
+    formData.append('stageRef', propositionFormation.stageRef);
+    
 
 
+    return formData;
+  }
+
+  updstage(formData: FormData): Observable<Stagier> {
+    return this.http.post<Stagier>(`${this.baseUrl}/update`, formData);
+  }
 }

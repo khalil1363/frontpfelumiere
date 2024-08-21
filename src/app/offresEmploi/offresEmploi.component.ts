@@ -4,10 +4,12 @@ import { Candidat } from '../model/Candidat';
 import { CandidatService } from '../service/candidat.service';
 import { NotificationService } from '../service/notification.service';
 import { PropositionOffre } from '../model/PropositionOffre';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { PropositionOffreService } from '../service/proposition-offre-service.service';
 import { OffreEmploi } from '../model/OffreEmploi';
 import { OffreEmploiService } from '../service/offre-emploi-service.service';
+import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 
@@ -24,7 +26,7 @@ export class offresEmploiComponent implements OnInit {
   form: FormGroup;
   offreEmploi:OffreEmploi[];
   isLoading = false;
-
+  private subscriptions: Subscription[] = [];
   constructor(
     private offreEmploiService: OffreEmploiService,
     private fb: FormBuilder,
@@ -65,7 +67,9 @@ export class offresEmploiComponent implements OnInit {
       }
     );
   }
-
+  public editFormationInfo(offre: OffreEmploi) {
+    this.clickButton('openFormationEdit');
+  }
   selectOffre(offre: OffreEmploi): void {
     this.selectedOffre = offre;
   }
@@ -85,20 +89,7 @@ export class offresEmploiComponent implements OnInit {
     }
   }
 
-  updateOffre(id: number): void {
-    if (this.form.valid) {
-      this.offreEmploiService.updateOffreEmploi(id, this.form.value).subscribe(
-        (response: OffreEmploi) => {
-          this.notificationService.notify(NotificationType.SUCCESS, 'Offre emploi mise à jour avec succès');
-          this.getOffresEmploi();
-          this.form.reset();
-        },
-        (error) => {
-          this.notificationService.notify(NotificationType.ERROR, 'Erreur lors de la mise à jour de l\'offre emploi');
-        }
-      );
-    }
-  }
+ 
 
   deleteOffre(id: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette offre d\'emploi ?')) {
@@ -137,4 +128,38 @@ export class offresEmploiComponent implements OnInit {
       }
     );
   }
+  private clickButton(buttonId: string): void {
+    document.getElementById(buttonId).click();
+  }
+
+  updaterec(editFormationForm: NgForm): void {
+  
+
+    const formValue = editFormationForm.value;
+  
+   
+  
+    const formData: FormData = this.offreEmploiService.createMouvementFormData(formValue);
+  
+    if (editFormationForm.valid) {
+      this.subscriptions.push(
+        this.offreEmploiService.updateoffre(formData).subscribe(
+          (response: OffreEmploi) => {
+            this.notificationService.notify(NotificationType.SUCCESS, 'planning updated successfully');
+            this.getOffresEmploi();
+            this.clickButton('new-proposition-close');
+            
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.notificationService.notify(NotificationType.ERROR, 'Failed to update planning');
+          }
+        )
+      );
+    }
+
+
+
+  }
+
+ 
 }

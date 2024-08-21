@@ -16,7 +16,7 @@ declare const bx: any;
 export class SidenavigationComponent  implements AfterViewInit , OnInit{
 
   @ViewChild('sidebar') sidebarRef!: ElementRef;
-
+  sidebarVisible: boolean = true;
   public connectedUser : User ;
 
    constructor(private renderer: Renderer2, private el: ElementRef , private router : Router  , 
@@ -36,10 +36,11 @@ export class SidenavigationComponent  implements AfterViewInit , OnInit{
     });
   }
   
-  toggleSidebar(): void {
-    const sidebar = this.sidebarRef.nativeElement;
-    sidebar.classList.toggle('close');
-  }  
+ 
+
+  toggleSidebar() {
+    this.sidebarVisible = !this.sidebarVisible;
+  }
 
   public onLogOut() : void {
     this.authenticationService.lougOut() ;

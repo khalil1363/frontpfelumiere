@@ -1,6 +1,6 @@
-export interface Planning {
-    idPlanning?: number;
-    module: number;
+export class Planning {
+    idPlanning: number;
+    module: string;
     departement: string;
     type: string;
     categorie : string;
@@ -20,5 +20,30 @@ export interface Planning {
     dateRealisation: Date;
     dateend:Date;
     nbj:string;
+
+    constructor() {
+      this.idPlanning = 0;
+      this.module = "";
+      this.departement = '';
+      this.type = '';
+      this.categorie = '';
+      this.demandeur = '';
+      this.posteProposerPar = '';
+      this.cabinetproposer = '';
+      this.objectif = '';
+      this.activite = '';
+      this.formateur = '';
+      this.observation = '';
+      this.budgetPrevisionnel = '';
+      this.budgetEstimatif = '';
+      this.statusPlannig = '';
+      this.coutreel = '';
+      this.evaluationChaud = '';
+      this.evaluationFroid = '';
+      this.dateRealisation = null;
+      this.dateend = null;
+      this.nbj = '';
+  }
+  
   }
   

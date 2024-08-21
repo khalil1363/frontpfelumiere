@@ -1,3 +1,7 @@
+<div>
+  <app-sidenavigation></app-sidenavigation>
+</div>
+
 <body>
     <i style="color: blue; font-size: 20px;" class="fas fa-user"></i>
   <span class="text" style="color: blue; font-size: large;">Gestion des candidat :</span>
@@ -51,7 +55,7 @@
        <td>{{x.tel}}</td>       
         <td>
           <div class="btn-group">
-            <button class="btn btn" >
+            <button class="btn btn" data-toggle="modal" data-target="#editvesiteModal"   >
               <i style="font-size: medium; color: grey;" class="fas fa-user-edit"></i>
             </button>
             <button class="btn btn"  (click)="deleteCan(x.idCandidats)">
@@ -70,7 +74,13 @@
   </table>
 </body>
 
-<div class="modal draggable fade bd-example-modal-lg" id="addStagierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+
+
+
+
+
+
+<div style="z-index:1" class="modal draggable fade bd-example-modal-lg" id="addStagierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -139,7 +149,10 @@
               </div>
 
 
-
+              <label>offresEmploiIds:</label>
+              <nz-select name="offresEmploiIds" [(ngModel)]="tagValue" [nzSize]="size" nzMode="multiple" nzPlaceHolder="list des offres">
+                <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+              </nz-select>
 
             </div>
           </div>
@@ -154,9 +167,89 @@
 </div> 
 
 
+<!--  -->
 
 
+ 
 
-  <div>
-    <app-sidenavigation></app-sidenavigation>
+<!-- Update Candidat Modal -->
+<div style="z-index:1" class="modal draggable fade bd-example-modal-lg" id="editvesiteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modifier Candidat</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #updateForm="ngForm" (ngSubmit)="updateCandidate(updateForm)">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="nomPrenom">idCandidat</label>
+                <input type="text" class="form-control" id="idCandidat" name="idCandidat" ngModel required>
+              </div>
+
+              <div class="form-group">
+                <label for="nomPrenom">Nom & Prénom</label>
+                <input type="text" class="form-control" id="nomPrenom" name="nomPrenom" ngModel required>
+              </div>
+              <div class="form-group">
+                <label for="cin">cin</label>
+                <input type="text" class="form-control" id="cin" name="cin" ngModel required>
+              </div>
+              <div class="form-group">
+                <label for="tel">tel</label>
+                <input type="text" class="form-control" id="tel" name="tel" ngModel required>
+              </div>
+              <div class="form-group">
+                <label for="specialite">adresse</label>
+                <input type="text" class="form-control" id="adresse" name="adresse" ngModel required>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="niveau">niveau</label>
+                <input type="text" class="form-control" id="niveau" name="niveau" ngModel required>
+              </div>
+              <div class="form-group">
+                <label for="diplome">diplome</label>
+                <input type="text" class="form-control" id="diplome" name="diplome" ngModel required>
+              </div>
+             
+              <div class="form-group">
+                <label for="famille">famille</label>
+                <input type="text" class="form-control" id="famille" name="famille" ngModel >
+              </div>
+             
+              <div class="form-group">
+                <label for="postPropose">postPropose</label>
+                <input type="text" class="form-control" id="postPropose" name="postPropose" ngModel >
+              </div>
+
+
+              <div class="form-group">
+                <label for="contact">contact</label>
+                <input type="text" class="form-control" id="contact" name="contact" ngModel >
+              </div>
+              <div class="form-group">
+                <label for="observation">observation</label>
+                <input type="text" class="form-control" id="observation" name="observation" ngModel >
+              </div>
+              <div class="form-group">
+                <label for="date">date</label>
+                <input type="date" class="form-control" id="date" name="date" ngModel >
+              </div>
+             
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
   </div>
+</div>

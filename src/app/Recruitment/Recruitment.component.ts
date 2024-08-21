@@ -9,6 +9,8 @@ import { Planning } from '../model/Planning';
 import { Recruitment } from '../model/Recruitment';
 import { RecruitmentService } from '../service/recruitment.service';
 import { OffreEmploi } from '../model/OffreEmploi';
+import { Employee } from '../model/Employee';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-Recruitment',
@@ -40,6 +42,7 @@ export class RecruitmentComponent implements OnInit, OnDestroy {
       this.recruitmentservice.getAllrec().subscribe(
         (response: Recruitment[]) => {
           this.recretemnts = response;
+          console.log(this.recretemnts,"ujjytyjyt")
           this.refreshing = false;
           if (showNotification) {
             this.sendNotification(NotificationType.SUCCESS, 'Recruitment loaded successfully');
@@ -57,29 +60,112 @@ export class RecruitmentComponent implements OnInit, OnDestroy {
 
 
 
+  Recruitment= {
+    idRecrutement: 0,
+    departement: "",
+    recruteur: "",
+    nomCondidat: "",
+    commentaire: "",
+    dateDemandeRec: "",
+    emploiDemandeType: "",
+    sourceType: "",
+    selectionPhase: "",
+    desisionType: "",
+    vueGestionaire: "",
+    vueDecideur: "",
+    vueRh: "",
+
+  }
+  
+  public updateRecruitment(): void {
+    this.recruitmentservice.updateRecruitment(this.Recruitment.idRecrutement, this.Recruitment).subscribe(
+      (response: Recruitment) => {
+        this.sendNotification(NotificationType.SUCCESS, 'Recruitment updated successfully');
+        this.getRc(false); // Reload the recruitments to reflect changes
+      },
+      (error) => {
+        this.sendNotification(NotificationType.ERROR, 'Failed to update Recruitment');
+      }
+    );
+  }
+
+  public editRecruitment(recruitment: Recruitment): void {
+    this.recruitmentservice.updateRecruitment(recruitment.idRecrutement, recruitment).subscribe(
+        (response: Recruitment) => {
+            this.sendNotification(NotificationType.SUCCESS, 'Recruitment updated successfully');
+            // Additional logic to update the UI or handle the response can be added here
+        },
+        (error: HttpErrorResponse) => {
+            this.sendNotification(NotificationType.ERROR, 'Failed to update Recruitment');
+        }
+    );
+}
 
 
 
 
+ 
+
+
+  public convertCandidatToEmployee(idRecrutement: number): void {
+    this.recruitmentservice.convertCandidatToEmployee(idRecrutement).subscribe(
+      (response: Employee) => {
+        this.sendNotification(NotificationType.SUCCESS, 'Candidate successfully converted to Employee');
+        // Additional logic to update the UI or handle the response can be added here
+      },
+      (error) => {
+        this.sendNotification(NotificationType.ERROR, 'Failed to convert Candidate to Employee');
+      }
+    );
+  }
+  
+ 
 
 
 
 
+  updaterec(editFormationForm: NgForm): void {
+  
+
+    const formValue = editFormationForm.value;
+  
+   
+  
+    const formData: FormData = this.recruitmentservice.createMouvementFormData(formValue);
+  
+    if (editFormationForm.valid) {
+      this.subscriptions.push(
+        this.recruitmentservice.updaterec(formData).subscribe(
+          (response: Recruitment) => {
+            this.sendNotification(NotificationType.SUCCESS, 'planning updated successfully');
+            this.getRc(true);
+            this.clickButton('new-proposition-close');
+            
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.sendNotification(NotificationType.ERROR, 'Failed to update planning');
+          }
+        )
+      );
+    }
 
 
 
-
-
+  }
 
 
   public saveNewFormation(): void {
     this.clickButton('new-formation-save');
   }
 
-  public editFormationInfo(editFormation: Formation): void {
+
+
+  public editFormationInfo(editFormation: Recruitment) {
     this.clickButton('openFormationEdit');
   }
-
+public edit (i:any){
+  this.Recruitment=i;
+}
  
   
 

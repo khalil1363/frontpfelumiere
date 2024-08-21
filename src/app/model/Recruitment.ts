@@ -1,7 +1,7 @@
 import { Candidat } from './Candidat';
 import { OffreEmploi } from './OffreEmploi';
 
-export interface Recruitment {
+export class Recruitment {
   idRecrutement: number;
   departement: string;
   recruteur: string;
@@ -17,4 +17,21 @@ export interface Recruitment {
   vueRh: string;
   candidat: Candidat[];
   offreEmploi: OffreEmploi[];
+  constructor() {
+    this.idRecrutement = 0;
+    this.departement = '';
+    this.recruteur = '';
+    this.nomCondidat = '';
+    this.commentaire = '';
+    this.dateDemandeRec = null;
+    this.emploiDemandeType = '';
+    this.sourceType = '';
+    this.selectionPhase = '';
+    this.desisionType = '';
+    this.vueGestionaire = '';
+    this.vueDecideur = '';
+    this.vueRh = '';
+    this.candidat = null;
+    this.offreEmploi = null;
+  }
 }

@@ -5,13 +5,14 @@ import { catchError, tap } from 'rxjs/operators';
 import { Formation } from '../model/Formation';
 import { environment } from 'src/environments/environment';
 import { Planning } from '../model/Planning';
+import { EffectifTotal } from '../model/EffectifTotal';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormationService {
   private apiUrl = environment.apiUrl + '/formations'; 
-
+  private tt=environment.apiUrl+'/effectifTotal';
   constructor(private http: HttpClient) { }
 
   // Get all formations
@@ -93,4 +94,40 @@ export class FormationService {
     console.error('An error occurred:', error);
     return throwError('Something went wrong; please try again later.');
   }
+
+
+
+  public createMouvementFormData(propositionFormation: any,): FormData {
+    const formData = new FormData();
+    formData.append('idFormation', propositionFormation.idFormation);
+    formData.append('module', propositionFormation.module);
+   
+    formData.append('type', propositionFormation.type);
+    formData.append('categorie', propositionFormation.categorie);
+
+    formData.append('description', propositionFormation.description);
+    formData.append('proposePar', propositionFormation.proposePar);
+    formData.append('posteProposerPar', propositionFormation.posteProposerPar);
+    formData.append('cabinetproposer', propositionFormation.cabinetproposer);
+    formData.append('departement', propositionFormation.departement);
+    formData.append('objectif', propositionFormation.objectif);
+    formData.append('activite', propositionFormation.activite);
+    formData.append('formateurPropose', propositionFormation.formateurPropose);
+    formData.append('budgetEstimatif', propositionFormation.budgetEstimatif );
+
+    formData.append('observation', propositionFormation.observation );
+    formData.append('budgetPrevisionnel', propositionFormation.budgetPrevisionnel );
+
+
+    return formData;
+  }
+
+
+
+  updateformation(formData: FormData): Observable<Formation> {
+    return this.http.post<Formation>(`${this.apiUrl}/update`, formData);
+  }
+
+
+
 }

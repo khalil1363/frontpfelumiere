@@ -6,6 +6,7 @@ import { NotificationType } from '../enum/notification-type.enum';
 import { NgForm } from '@angular/forms';
 import { Formation } from '../model/Formation';
 import { Planning } from '../model/Planning';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-formation',
@@ -22,7 +23,8 @@ export class FormationComponent implements OnInit, OnDestroy {
   p: number = 1;
   itemsPerPage: number = 6;
   totalElements: any;
-
+  public editedEmployee = new Formation() ;
+  ed= new Formation();
   constructor(
     private formationService: FormationService,
     private notificationService: NotificationService
@@ -116,8 +118,8 @@ export class FormationComponent implements OnInit, OnDestroy {
   }
 
   selectFormationForEdit(formation: Formation): void {
-    this.selectedFormation = { ...formation };
-    this.clickButton('openFormationEdit');
+    this.ed = formation;
+        this.clickButton('openFormationEdit');
   }
 
   deleteFormation(formationId: number): void {
@@ -144,6 +146,36 @@ export class FormationComponent implements OnInit, OnDestroy {
 
   private clickButton(buttonId: string): void {
     document.getElementById(buttonId).click();
+  }
+
+
+  updaterec(editFormationForm: NgForm): void {
+  
+
+    const formValue = editFormationForm.value;
+  
+   
+  
+    const formData: FormData = this.formationService.createMouvementFormData(formValue);
+  
+    if (editFormationForm.valid) {
+      this.subscriptions.push(
+        this.formationService.updateformation(formData).subscribe(
+          (response: Formation) => {
+            this.sendNotification(NotificationType.SUCCESS, 'planning updated successfully');
+            this.getFormations(true);
+            this.clickButton('new-proposition-close');
+            
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.sendNotification(NotificationType.ERROR, 'Failed to update planning');
+          }
+        )
+      );
+    }
+
+
+
   }
 
   ngOnDestroy(): void {

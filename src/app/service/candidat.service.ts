@@ -52,24 +52,41 @@ export class CandidatService {
     return this.http.post<Candidat>(`${this.host}/candidats/add`, null, { params });
   }
 
-  updateCandidat(idCandidat: number, candidatData: any): Observable<Candidat> {
-    const params = new HttpParams()
-      .set('idCandidat', idCandidat)
-      .set('nomPrenom', candidatData.nomPrenom)
-      .set('cin', candidatData.cin)
-      .set('tel', candidatData.tel)
-      .set('adresse', candidatData.adresse)
-      .set('niveau', candidatData.niveau)
-      .set('diplome', candidatData.diplome)
-      .set('famille', candidatData.famille)
-      .set('postPropose', candidatData.postPropose)
-      .set('contact', candidatData.contact)
-      .set('observation', candidatData.observation)
-      .set('date', candidatData.date)
-      .set('offresEmploiIds', candidatData.offresEmploiIds);
+  
 
-    return this.http.post<Candidat>(`${this.host}/candidats/update`, null, { params });
+
+  updateCandidat(formData: FormData): Observable<Candidat> {
+    return this.http.post<Candidat>(`${this.baseUrl}/update`, formData);
   }
+
+
+
+
+  public createMouvementFormData(propositionFormation: any,): FormData {
+    const formData = new FormData();
+    formData.append('idCandidat', propositionFormation.idCandidat);
+    formData.append('nomPrenom', propositionFormation.nomPrenom);
+    formData.append('cin', propositionFormation.cin);
+    formData.append('tel', propositionFormation.tel);
+    formData.append('adresse', propositionFormation.adresse);
+    formData.append('niveau', propositionFormation.niveau);
+    formData.append('diplome', propositionFormation.diplome);
+    formData.append('famille', propositionFormation.famille);
+    formData.append('postPropose', propositionFormation.postPropose);
+    formData.append('contact', propositionFormation.contact);
+    formData.append('observation', propositionFormation.observation);
+    formData.append('observation', propositionFormation.observation);
+    formData.append('date', this.formatDate(propositionFormation.date));
+
+
+    
+
+    return formData;
+  }
+
+
+
+
 
   deleteCandidat(idCandidats: number): Observable<any> {
     return this.http.delete(`${this.host}/candidats/${idCandidats}`);

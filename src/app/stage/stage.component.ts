@@ -28,6 +28,25 @@ export class stageComponent implements OnInit , OnDestroy  {
     this.getStages(true) ;
   }
  
+
+  Stage= {
+    idStage:0,
+      theme: "",
+      departement: "",
+      site: "",
+      dateDebut: "",
+      dateFin: "",
+      bilan: "",
+      reference: ""
+      
+    }
+
+  edit(i:any){
+    this.Stage=i;
+    }
+    
+
+
   public saveNewUser () : void { // open newUserModal 
     this.clickButton('new-user-save');
   }
@@ -85,25 +104,28 @@ export class stageComponent implements OnInit , OnDestroy  {
       );
     }
   }
-  updateStage(stageForm: NgForm): void {
-    if (stageForm.valid && this.selectedstage) {
-      this.satgeService.updateStage(this.selectedstage.idStage, stageForm.value).subscribe(
-        () => {
-          this.sendNotification(NotificationType.SUCCESS, 'Stage updated successfully');
-          this.getStages(false); // Refresh the stage list
-          this.selectedstage = null; // Reset selected stage
-          document.getElementById('edit-user-close')?.click(); // Close the modal
-        },
-        (error) => {
-          this.sendNotification(NotificationType.ERROR, 'Failed to update stage');
-        }
-      );
-    }
-  }
+    
+
+
+  update(): void {
+    
+    this.satgeService.addStage(this.Stage).subscribe(
+      (response) => {
+        this.sendNotification(NotificationType.SUCCESS, 'Visite médicale added successfully');
+        this.getStages(false);
+        document.getElementById('new-user-close').click();
+       
+      },
+      (error) => {
+        this.sendNotification(NotificationType.ERROR, 'Failed to add visite médicale');
+      }
+    );
+  
+}
+
+
+
   selectStageForEdit(stage: Stage): void {
-    // Create a copy of the selected stage to avoid modifying the original stage directly
-    this.selectedstage = { ...stage };
-    // Open the edit modal
     this.clickButton('openstageEdit');
   }
   deleteStage(stageId: number): void {

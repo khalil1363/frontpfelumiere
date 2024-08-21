@@ -5,6 +5,7 @@ import { NotificationService } from '../service/notification.service';
 import { NotificationType } from '../enum/notification-type.enum';
 import { NgForm } from '@angular/forms';
 import { Planning } from '../model/Planning';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -17,11 +18,12 @@ export class PlanningComponent implements OnInit, OnDestroy {
   public plannings: Planning[] = [];
   public selectedPlanning: Planning;
   public refreshing: boolean;
-
+  public editedEmployee = new Planning() ;
   p: number = 1;
   itemsPerPage: number = 6;
   totalElements: any;
-
+  pl=new Planning();
+  public editUser= new Planning();
   constructor(
     private planningService: PlanningService,
     private notificationService: NotificationService,
@@ -32,18 +34,27 @@ export class PlanningComponent implements OnInit, OnDestroy {
     this.getPlannings(true);
   }
 
+
+
+  
+  
+
   public onSelectPlanning(selectedPlanning: Planning): void {
     this.selectedPlanning = selectedPlanning;
     this.clickButton('openPlanningInfo');
   }
-
+ 
+    
   public saveNewPlanning(): void {
     this.clickButton('new-planning-save');
   }
 
   public editPlanningInfo(editPlanning: Planning): void {
     this.clickButton('openPlanningEdit');
+    this.pl = editPlanning;
+    console.log(this.pl)
   }
+
 
   public getPlannings(showNotification: boolean): void {
     this.refreshing = true;
@@ -64,6 +75,10 @@ export class PlanningComponent implements OnInit, OnDestroy {
     );
   }
 
+
+ 
+
+
   addNewPlanning(planningForm: NgForm): void {
     if (planningForm.valid) {
       this.planningService.addPlanning(planningForm.value).subscribe(
@@ -80,21 +95,7 @@ export class PlanningComponent implements OnInit, OnDestroy {
     }
   }
 
-  updatePlanning(planningForm: NgForm): void {
-    if (planningForm.valid && this.selectedPlanning) {
-      this.planningService.updatePlanning(this.selectedPlanning).subscribe(
-        (response: Planning) => {
-          this.sendNotification(NotificationType.SUCCESS, 'Planning updated successfully');
-          this.getPlannings(false);
-          this.selectedPlanning = null;
-          document.getElementById('edit-planning-close').click();
-        },
-        (error) => {
-          this.sendNotification(NotificationType.ERROR, 'Failed to update planning');
-        }
-      );
-    }
-  }
+ 
 
   selectPlanningForEdit(planning: Planning): void {
     this.selectedPlanning = { ...planning };
@@ -115,6 +116,54 @@ export class PlanningComponent implements OnInit, OnDestroy {
     }
   }
   
+
+
+
+
+
+
+
+
+
+
+
+  updateplanning(planningForm: NgForm): void {
+  
+
+    const formValue = planningForm.value;
+  
+   
+  
+    const formData: FormData = this.planningService.createMouvementFormData(formValue);
+  
+    if (planningForm.valid) {
+      this.subscriptions.push(
+        this.planningService.updateplanning(formData).subscribe(
+          (response: Planning) => {
+            this.sendNotification(NotificationType.SUCCESS, 'planning updated successfully');
+            this.getPlannings(true);
+            this.clickButton('new-proposition-close');
+            
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.sendNotification(NotificationType.ERROR, 'Failed to update planning');
+          }
+        )
+      );
+    }
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
 
   private sendNotification(notificationType: NotificationType, message: string): void {
     if (message) {

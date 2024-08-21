@@ -1,4 +1,4 @@
-export interface PropositionOffre {
+export class PropositionOffre {
   idOffreProp: number;
     departement: string;
     jobTitle: string;
@@ -10,5 +10,18 @@ export interface PropositionOffre {
     recruteur: string;
     modeRecretement : string;
     statusPropo: string; // Assuming there's a status field in your entity
+    constructor() {
+      this.idOffreProp = 0;
+      this.departement = '';
+      this.jobTitle = '';
+      this.coutEmbauche = 0;
+      this.duree = '';
+      this.motifRecretement = '';
+      this.dateLancement = null;
+      this.dateEmbauche = null;
+      this.recruteur = '';
+      this.modeRecretement = '';
+      this.statusPropo = '';
+    }
   }
   

@@ -7,6 +7,8 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { OffreEmploiService } from '../service/offre-emploi-service.service';
 import { OffreEmploi } from '../model/OffreEmploi';
+import { NzSelectSizeType } from 'ng-zorro-antd/select';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 
@@ -24,15 +26,42 @@ export class CandidatComponent implements OnInit {
   offresEmploi: OffreEmploi[];
 
   private subscriptions: Subscription[] = [];
+///////////////////////
+listOfOption: Array<{ label: string; value: number }> = [];
+size: NzSelectSizeType = 'default';
+singleValue = 'a10';
+multipleValue = ['a10', 'c12'];
+tagValue = [];
+Candidat ={
+  idCandidats: 0,
+  nomPrenom: "",
+  cin: "",
+  tel: "",
+  adresse: "",
+  niveau: "",
+  diplome: "",
+  famille: "",
+  postPropose: "",
+  contact: "",
+  observation: "",
+  date: "",
+  offresEmploiIds:{}
+}
 
+//////////////////
   constructor(private candidatService: CandidatService, private offreEmploiService: OffreEmploiService,
+    
     private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.getCandidats(true);
+    this.getstag(true);
     
   }
-
+  edit(i:any){
+    this.Candidat=i;
+    }
+    
   getOffresEmploi(): void {
     this.offreEmploiService.getAllOffresEmploi().subscribe(
       (response: OffreEmploi[]) => {
@@ -77,10 +106,33 @@ export class CandidatComponent implements OnInit {
     );
   }
 
+ 
+ 
+  updateCandidate(updateForm: NgForm): void {
+    const formValue = updateForm.value;
+    const formData: FormData = this.candidatService.createMouvementFormData(formValue);
+    if (updateForm.valid) {
+      this.subscriptions.push(
+        this.candidatService.updateCandidat(formData).subscribe(
+          (response: Candidat) => {
+            this.notificationService.notify(NotificationType.SUCCESS, 'planning updated successfully');
+            this.getCandidats(true);
+            this.clickButton('new-proposition-close');
+            
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.notificationService.notify(NotificationType.ERROR, 'Failed to update planning');
+          }
+        )
+      );
+    }
+  }
 
 
 
-
+  public editvesiteinfo(editcandidtae: Candidat): void {
+    this.clickButton('openvesiteEdit');
+  }
 
 
 
@@ -117,13 +169,9 @@ export class CandidatComponent implements OnInit {
         }
       );
     }
-  }
+  }     
 
-
-
-
-
-
+  
 
 
 
@@ -141,4 +189,52 @@ export class CandidatComponent implements OnInit {
       );
     }
   }
+
+
+
+
+
+
+
+
+
+  public getstag(showNotification: boolean): void {
+    this.refreshing = true;
+    this.subscriptions.push(
+      this.offreEmploiService.getAllOffresEmploi().subscribe(
+        (response) => {
+          const childrenn: Array<{ label: string; value: number }> = [];
+          response.forEach((emp: OffreEmploi) =>{
+            childrenn.push({ label: emp.jobTitre, value: emp.idOffreEmploi });
+
+          })
+          this.listOfOption = childrenn;
+
+          this.refreshing = true;
+          if (showNotification) {
+          }
+        },
+        (error) => {
+          this.refreshing = false;
+        }
+      )
+    );
+  }
+
+
+
+
+
+
+
+  private clickButton(buttonId: string): void {
+    document.getElementById(buttonId).click();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+
+
 }

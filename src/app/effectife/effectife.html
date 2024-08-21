@@ -1,0 +1,45 @@
+<!-- Form to create or update EffectifTotal -->
+<form [formGroup]="effectifTotalForm" (ngSubmit)="currentId ? updateEffectifTotal() : createEffectifTotal()">
+  <div class="form-group">
+    <label for="effectiveTotal">Effective Total:</label>
+    <input
+      type="number"
+      id="effectiveTotal"
+      formControlName="effectiveTotal"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': effectifTotalForm.get('effectiveTotal').invalid && effectifTotalForm.get('effectiveTotal').touched }"
+    />
+    <div *ngIf="effectifTotalForm.get('effectiveTotal').invalid && effectifTotalForm.get('effectiveTotal').touched" class="invalid-feedback">
+      Effective Total is required.
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">
+    {{ currentId ? 'Update' : 'Create' }}
+  </button>
+  <a routerLink="/effectifTotal-list" class="btn btn-secondary">Cancel</a>
+</form>
+
+<!-- List of EffectifTotal items -->
+<div *ngIf="effectifTotals.length > 0">
+  <h3>EffectifTotals List</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Effective Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of effectifTotals">
+        <td>{{ item.id }}</td>
+        <td>{{ item.effectiveTotal }}</td>
+        <td>
+          <button (click)="currentId = item.id; loadEffectifTotal()" class="btn btn-warning">Edit</button>
+          <button (click)="deleteEffectifTotal(item.id)" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,3 +1,6 @@
+<div>
+  <app-sidenavigation></app-sidenavigation>
+</div>
 <body>
   <i style="color: blue; font-size: 20px;" class="fas fa-user"></i>
   <span class="text" style="color: blue; font-size: large;">Gestion des recretemnts :</span>
@@ -27,7 +30,7 @@
           <th style="text-align: center">departement</th>
           <th style="text-align: center">desisionType</th>
           <th style="text-align: center">emploiDemandeType</th>
-          <th style="text-align: center">offreEmploi</th>
+          <!-- <th style="text-align: center">offreEmploi</th> -->
           <th style="text-align: center">recruteur</th>
           <th style="text-align: center">selectionPhase</th>
           <th style="text-align: center">sourceType</th>
@@ -49,10 +52,18 @@
           <td>{{x.departement}}</td>
           <td>{{x.desisionType}}</td>
           <td>{{x.emploiDemandeType}}</td>
-          <td>
-             <span *ngFor="let y of x.offreEmploi">{{ y.jobTitre}}</span>
-          </td>        
+<!--           
+          <td *ngFor="let y of x.offreEmploi">
+            <span >{{ y.jobTitre}}</span>
+          </td>  
+           -->
+          
+
           <td>{{x.recruteur}}</td>
+
+
+
+
           <td>{{x.selectionPhase}}</td>
           <td>{{x.sourceType}}</td>
           <td>{{x.vueDecideur}}</td>
@@ -60,14 +71,16 @@
           <td>{{x.vueRh}}</td>
           <td>
             <div class="btn-group">
-              <button class="btn btn">
+              <button class="btn btn"  (click)="editFormationInfo(x)" (click)="edit(x)">
                 <i style="font-size: medium; color: grey;" class="fas fa-user-edit"></i>
               </button>
               <button class="btn btn" >
                 <i style="font-size: small; color: red;" class="fas fa-trash"></i>
               </button>
              
-              
+              <button class="btn btn" (click)="convertCandidatToEmployee(x.idRecrutement)">
+                <i style="font-size: medium; color: green;" class="fas fa-exchange-alt"></i>
+              </button>
             </div>
           </td>
         </tr>
@@ -79,7 +92,6 @@
       </div>
     </div>
   </div>
-  <button [hidden]="true" type="button" id="openFormationInfo" data-toggle="modal" data-target="#viewFormationModal"></button>
   <button [hidden]="true" type="button" id="openFormationEdit" data-toggle="modal" data-target="#editFormationModal"></button>
 </body>
 
@@ -176,32 +188,74 @@
         </button>
       </div>
       <div class="modal-body">
-        <form  #editFormationForm="ngForm">
-          <div class="form-group">
-            <label for="module">Module</label>         
-            <input type="text" class="form-control" id="module" name="module" ngModel required>
+        <form #editFormationForm="ngForm" (ngSubmit)="updaterec(editFormationForm)" >
+          <div class="col-md-6">
+            <label>idRecrutement:</label>      
+            <input  type="text"   class="form-control"  id="idRecrutement" name="idRecrutement" ngModel required>
           </div>
           <div class="form-group">
-            <label for="categorie">Categorie</label>
-            <input type="text" class="form-control" id="categorie" name="categorie" ngModel required>
+            <label for="departement">departement</label>
+            <input type="text" class="form-control" id="departement" [(ngModel)]="Recruitment.departement" name="departement" required>
+          </div>
+
+
+          <div class="form-group">
+            <label for="recruteur">recruteur</label>
+            <input type="text" class="form-control" id="recruteur" [(ngModel)]="Recruitment.recruteur" name="recruteur" required>
+          </div>
+
+
+          <div class="form-group">
+            <label for="nomCondidat">nomCondidat</label>
+            <input type="text" name="nomCondidat" class="form-control" id="nomCondidat" [(ngModel)]="Recruitment.nomCondidat" required>
           </div>
           <div class="form-group">
-            <label for="type">Type</label>
-            <input type="text" class="form-control" id="type" name="type" ngModel required>
+            <label for="commentaire">commentaire</label>
+            <input type="text" class="form-control" id="commentaire" [(ngModel)]="Recruitment.commentaire" name="commentaire" required>
           </div>
           <div class="form-group">
-            <label for="duree">Durée</label>
-            <input type="text" class="form-control" id="duree" name="duree" ngModel required>
+            <label for="dateDemandeRec">dateDemandeRec</label>
+            <input type="date" class="form-control" id="dateDemandeRec" [(ngModel)]="Recruitment.dateDemandeRec" name="dateDemandeRec" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="emploiDemandeType">emploiDemandeType</label>
+            <input type="text" class="form-control" id="emploiDemandeType" [(ngModel)]="Recruitment.emploiDemandeType" name="emploiDemandeType" required>
+          </div>
+          <div class="form-group">
+            <label for="sourceType">sourceType</label>
+            <input type="text" class="form-control" id="sourceType" [(ngModel)]="Recruitment.sourceType" name="sourceType" required>
+          </div>
+          <div class="form-group">
+            <label for="selectionPhase">selectionPhase</label>
+            <input type="text" class="form-control" id="selectionPhase" [(ngModel)]="Recruitment.selectionPhase" name="selectionPhase" required>
+          </div>
+          <div class="form-group">
+            <label for="desisionType">desisionType</label>
+            <input type="text" class="form-control" id="desisionType" [(ngModel)]="Recruitment.desisionType" name="desisionType" required>
+          </div>
+          
+         
+          <div class="form-group">
+            <label for="vueGestionaire">vueGestionaire</label>
+            <input type="text" class="form-control" id="vueGestionaire" [(ngModel)]="Recruitment.vueGestionaire" name="vueGestionaire" required>
+          </div>
+         
+          <div class="form-group">
+            <label for="vueDecideur">vueDecideur</label>
+            <input type="text" class="form-control" id="vueDecideur" [(ngModel)]="Recruitment.vueDecideur" name="vueDecideur" required>
+          </div>
+        
+          <div class="form-group">
+            <label for="vueRh">vueRh</label>
+            <input type="text" class="form-control" id="vueRh" [(ngModel)]="Recruitment.vueRh" name="vueRh" required>
           </div>
           <button type="submit" class="btn btn-primary">Update Formation</button>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" id="edit-formation-close" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>      
+      </div>
     </div>
   </div>
-</div>
-<div>
-  <app-sidenavigation></app-sidenavigation>
 </div>

@@ -107,7 +107,7 @@ export class nbrhromponent implements OnInit {
       stroke: {
         lineCap: "round"
       },
-      labels: ["Average nbrH"]
+      labels: [""]
     };
   }
 

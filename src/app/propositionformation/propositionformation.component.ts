@@ -28,7 +28,8 @@ export class Propositionformation implements OnInit, OnDestroy {
   itemsPerPage: number = 6;
   totalElements: any;
   allEmployees: { name: string }[] = [];
-
+  pl=new PropositionFormation();
+  
 ///////////
 
 
@@ -70,9 +71,7 @@ tagValue = [];
     this.clickButton('new-proposition-save');
   }
 
-  public editPropositionInfo(editProposition: PropositionFormation): void {
-    this.clickButton('openPropositionEdit');
-  }
+
 
   public getPropositions(showNotification: boolean): void {
     this.refreshing = true;
@@ -181,36 +180,19 @@ tagValue = [];
     }
   }
 
-  updateProposition(propositionForm: NgForm): void {
-    if (propositionForm.valid && this.selectedProposition) {
-      this.propositionService.updatePropositionFormation(
-        this.selectedProposition.idProposition,
-        propositionForm.value.module,
-        propositionForm.value.type,
-        propositionForm.value.categorie,
-        propositionForm.value.description,
-        propositionForm.value.proposePar,
-        propositionForm.value.nbHeures,
-        false // Assuming isAccepted is always false for editing
-      ).subscribe(
-        () => {
-          this.sendNotification(NotificationType.SUCCESS, 'Proposition updated successfully');
-          this.getPropositions(false); // Refresh the proposition list
-          this.selectedProposition = null; // Reset selected proposition
-          document.getElementById('edit-proposition-close')?.click(); // Close the modal
-        },
-        (error) => {
-          this.sendNotification(NotificationType.ERROR, 'Failed to update proposition');
-        }
-      );
-    }
-  }
+ 
 
   selectPropositionForEdit(proposition: PropositionFormation): void {
+    this.pl = proposition;
     this.selectedProposition = { ...proposition };
     this.clickButton('openPropositionEdit');
   }
 
+
+  
+
+
+  
   deleteProposition(propositionId: number): void {
     if (confirm('Are you sure you want to delete this proposition?')) {
       this.propositionService.deletePropositionFormation(propositionId).subscribe(
@@ -262,6 +244,42 @@ tagValue = [];
   }
 
   
+
+
+  updateProposition(propositionFormationForm: NgForm): void {
+    const formValue = propositionFormationForm.value;
+  
+    if (typeof formValue.employeeNames === 'string') {
+      formValue.employeeNames = formValue.employeeNames.split(',').map(name => name.trim());
+    }
+  
+    if (propositionFormationForm.valid) {
+      this.subscriptions.push(
+        this.propositionService.updatePropositionFormation(this.selectedProposition.idProposition, formValue).subscribe(
+          (response: PropositionFormation) => {
+            this.sendNotification(NotificationType.SUCCESS, 'PropositionFormation updated successfully');
+            this.getPropositions(true);
+            this.clickButton('closeEditPropositionModal');
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.sendNotification(NotificationType.ERROR, 'Failed to update PropositionFormation');
+          }
+        )
+      );
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
   
   
   
@@ -301,4 +319,35 @@ tagValue = [];
       this.getExistingFormations();
     }
   }
+
+ 
+  updateprop(editPropositionForm: NgForm): void {
+  
+
+    const formValue = editPropositionForm.value;
+  
+   
+  
+    const formData: FormData = this.propositionService.createMouvementFormDataa(formValue);
+  
+    if (editPropositionForm.valid) {
+      this.subscriptions.push(
+        this.propositionService.updateprop(formData).subscribe(
+          (response: PropositionFormation) => {
+            this.sendNotification(NotificationType.SUCCESS, 'planning updated successfully');
+            this.getPropositions(true);
+            this.clickButton('new-proposition-close');
+            
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.sendNotification(NotificationType.ERROR, 'Failed to update planning');
+          }
+        )
+      );
+    }
+  }
+  
+
+
+
 }

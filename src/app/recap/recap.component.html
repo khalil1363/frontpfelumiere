@@ -1,0 +1,39 @@
+<!-- visite-medicale-summary.component.html -->
+<div>
+  <app-sidenavigation></app-sidenavigation>
+</div>
+
+<div class="card mx-auto" style="max-width: 70%; margin-left: 300px; " style="display:flex; justify-content: center; width: 1000px;">
+  <div class="card-header  text-white" style="background-color:  #f89542;">
+    <h4 class="card-title text-center">Summary of Medical Visits by Site</h4>
+  </div>
+
+  <div class="card-body" >
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Site</th>
+            <th scope="col">Effectifs Total</th>
+            <th scope="col">NB de suivi par site</th>
+            <th scope="col">NB Rest</th>
+            <th scope="col">T visite médicale par site</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of summaryData">
+            <td>{{ data.site }}</td>
+            <td>{{ data.total }}</td>
+            <td>{{ data.suivi }}</td>
+            <td>{{ data.rest }}</td>
+            <td>{{ data.taux }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div class="card-footer text-muted text-center">
+    Last Updated: {{ lastUpdated | date:'short' }}
+  </div>
+</div>

@@ -1,3 +1,6 @@
+<div>
+  <app-sidenavigation></app-sidenavigation>
+</div>
 <body>
   <i style="color: blue; font-size: 20px;" class="fas fa-user" ></i>
   <Span class="text"  style="color: blue; font-size: large;">   Gestion des satgiare : </Span>
@@ -46,7 +49,7 @@
   <td (click)="selectStage(stage)">{{ stage.reference }}</td>
 <td>
 <div class="btn-group">
-  <button class="btn btn" (click)="selectStageForEdit(stage)">
+  <button class="btn btn" (click)="selectStageForEdit(stage)"  (click)="edit(stage)">
     <i style="font-size: medium; color: grey;" class="fas fa-user-edit"></i>
   </button>
     <button class="btn btn" (click)="deleteStage(stage.idStage)">
@@ -182,43 +185,39 @@
   <form #editUserForm="ngForm" >
    <div class="form-group">
     <label for="theme">theme</label>
-    <input type="text" name="theme" class="form-control">
+    <input type="text" [(ngModel)]="Stage.theme" name="theme" class="form-control">
    </div>
    <div class="form-group">
     <label for="departement">departement</label>
-    <input type="text" name="departement" class="form-control">
+    <input type="text"  [(ngModel)]="Stage.departement" name="departement" class="form-control">
    </div>
    <div class="form-group">
     <label for="site">site</label>
-    <input type="text" name="site" class="form-control">
+    <input type="text"  [(ngModel)]="Stage.site" name="site" class="form-control">
    </div>
    <div class="form-group">
     <label for="dateDebut">dateDebut</label>
-    <input type="date" name="dateDebut"  class="form-control">
+    <input type="date"  [(ngModel)]="Stage.dateDebut"name="dateDebut"  class="form-control">
    </div>
    <div class="form-group">
     <label for="dateDebut">dateFin</label>
-    <input type="date" name="dateFin"  class="form-control">
+    <input type="date"  [(ngModel)]="Stage.dateFin" name="dateFin"  class="form-control">
    </div>
    <div class="form-group">
     <label for="bilan">bilan</label>
-    <input type="text" name="bilan"  class="form-control">
+    <input type="text" name="bilan "  [(ngModel)]="Stage.bilan" class="form-control">
    </div>
    <div class="form-group">
     <label for="reference">reference</label>
-    <input type="text" name="reference"  class="form-control">
+    <input type="text" name="reference"  [(ngModel)]="Stage.reference"  class="form-control">
    </div>
-    <button type="submit" style="display: none;" id="new-stage-save"></button>
   </form>
   </div>             
   </div>
   <div class="modal-footer">
   <button type="button" class="btn btn-secondary" data-dismiss="modal" id="edit-stage-close">Close</button>
-  <button type="button" class="btn btn-primary">Save Changes</button>
+  <button type="button" class="btn btn-primary" (click)="update()">Save Changes</button>
   </div>
   </div>
   </div>
   </div>
-<div>
-  <app-sidenavigation></app-sidenavigation>
-</div>

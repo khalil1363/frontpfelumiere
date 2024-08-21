@@ -27,6 +27,9 @@ import { propositionOffresComponent } from './propositionOffres/propositionOffre
 import { offresEmploiComponent } from './offresEmploi/offresEmploi.component';
 import { RecruitmentComponent } from './Recruitment/Recruitment.component';
 import { vesiteComponent } from './vesite/vesite.component';
+import { recapComponent } from './recap/recap.component';
+import { ChauffeurComponent } from './Chauffeur/Chauffeur.component';
+import { recDashbordComponent } from './recDashbord/recDashbord.component';
 
 
 
@@ -52,7 +55,10 @@ const routes: Routes = [
   {path : 'propooffre' , component : propositionOffresComponent },
   {path : 'offre' , component : offresEmploiComponent },
   {path : 'recretemnt' , component : RecruitmentComponent },
-  {path : 'vesite' , component : vesiteComponent }
+  {path : 'vesite' , component : vesiteComponent },
+  {path : 'recap' , component : recapComponent },
+  {path : 'Chauffeur' , component : ChauffeurComponent },
+  {path : 'recdash' , component : recDashbordComponent }
 
 ];
 

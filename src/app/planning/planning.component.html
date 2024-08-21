@@ -1,3 +1,6 @@
+<div>
+  <app-sidenavigation></app-sidenavigation>
+</div>
 <div class="container mt-5 main-content">
   <div class="row">
     <div class="col-md-12">
@@ -69,7 +72,7 @@
                 <td>{{planning.nbj}}</td>
                 <td>
                   <div class="btn-group">
-                    <button class="btn btn" (click)="selectPlanningForEdit(planning)">
+                    <button class="btn btn" (click)="editPlanningInfo(planning)">
                       <i style="font-size: medium; color: grey;" class="fas fa-user-edit"></i>
                     </button>
                     <button class="btn btn" (click)="deletePlanning(planning.idPlanning)">
@@ -83,10 +86,11 @@
         </div>
       </div>
       
-     
+      <button [hidden]="true" type="button" id="openPlanningEdit" data-toggle="modal" data-target="#editplanningModal"> <!-- this.data-target == <div (openEditMadal) > id = data-target -->>
+      </button>
 
   <!-- Edit Planning Modal -->
-  <div class="modal fade" id="editPlanningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="editplanningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -95,29 +99,106 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form #planningForm="ngForm" (ngSubmit)="updatePlanning(planningForm)">
+        <form #planningForm="ngForm" (ngSubmit)="updateplanning(planningForm)">
           <div class="modal-body">
-            <div class="form-group">
-              <label for="module">Module</label>
-              <input type="text" class="form-control" id="module" name="module" ngModel required>
+            <div class="form-row">
+              
+              <div class="form-group col-md-6" hidden>
+                <label hidden for="idPlanning">idPlanning</label >
+                <input hidden type="text"   class="form-control"  id="idPlanning" name="idPlanning"  [(ngModel)]="pl.idPlanning" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="module">Module</label>
+                <input type="text" class="form-control" id="module" name="module"  [(ngModel)]="pl.module" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="departement">Departement</label>
+                <input type="text" class="form-control" id="departement" name="departement"  [(ngModel)]="pl.departement" required>
+              </div>
+            
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="type">Type</label>
+                <input type="text" class="form-control" id="type" name="type"  [(ngModel)]="pl.type" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="categorie">Categorie</label>
+                <input type="text" class="form-control"  id="categorie" name="categorie"  [(ngModel)]="pl.categorie" required>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="departement">Departement</label>
-              <input type="text" class="form-control" id="departement" name="departement" ngModel required>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="demandeur">Demandeur</label>
+                <input type="text" class="form-control" id="demandeur" name="demandeur"  [(ngModel)]="pl.demandeur" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="posteProposerPar">Poste Proposé Par</label>
+                <input type="text" class="form-control" id="posteProposerPar" name="posteProposerPar"  [(ngModel)]="pl.posteProposerPar" required>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="fonction">Fonction</label>
-              <input type="text" class="form-control" id="fonction" name="fonction" ngModel required>
-
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="cabinetproposer">Cabinet Proposé</label>
+                <input type="text"  class="form-control" id="cabinetproposer" name="cabinetproposer"  [(ngModel)]="pl.cabinetproposer" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="objectif">Objectif</label>
+                <input type="text"  class="form-control" id="objectif" name="objectif"  [(ngModel)]="pl.objectif" required>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="feedback">Feedback</label>
-              <input type="text" class="form-control" id="feedback" name="feedback" ngModel required>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="activite">Activite</label>
+                <input type="text"  class="form-control" id="activite" name="activite"  [(ngModel)]="pl.activite" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="formateur">Formateur</label>
+                <input type="text"  class="form-control" id="formateur" name="formateur"  [(ngModel)]="pl.formateur" required>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="date">Date</label>
-              <input type="date" class="form-control" id="date" name="date" ngModel required>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="observation">Observation</label>
+                <input type="text"  class="form-control" id="observation" name="observation"  [(ngModel)]="pl.observation" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="budgetPrevisionnel">Budget Prévisionnel</label>
+                <input type="text" class="form-control" id="budgetPrevisionnel" name="budgetPrevisionnel"  [(ngModel)]="pl.budgetPrevisionnel" required>
+              </div>
             </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="budgetEstimatif">Budget Estimatif</label>
+                <input type="text"  class="form-control" id="budgetEstimatif" name="budgetEstimatif"  [(ngModel)]="pl.budgetEstimatif" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="statusPlannig">Status Planning</label>
+                <input type="text"  class="form-control" id="statusPlanning" name="statusPlanning"  [(ngModel)]="pl.statusPlannig" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="coutreel">Coût Réel</label>
+                <input type="text"  class="form-control" id="coutreel" name="coutreel"  [(ngModel)]="pl.coutreel" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="evaluationChaud">Évaluation Chaud</label>
+                <input type="text"  class="form-control" id="evaluationChaud" name="evaluationChaud"  [(ngModel)]="pl.evaluationChaud" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="evaluationFroid">Évaluation Froid</label>
+                <input type="text"  class="form-control" id="evaluationFroid" name="evaluationFroid"  [(ngModel)]="pl.evaluationFroid" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="evaluationFroid">dateRealisation </label>
+                <input type="date"  class="form-control" id="dateRealisation" name="dateRealisation"  [(ngModel)]="pl.dateRealisation" required>
+              </div>
+            </div>
+          </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -126,30 +207,9 @@
         </form>
       </div>
     </div>
-  </div>
 
-  <!-- View Planning Modal -->
-  <div class="modal fade" id="viewPlanningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Planning Details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p><strong>Module:</strong> {{ selectedPlanning?.module }}</p>
-          <p><strong>Departement:</strong> {{ selectedPlanning?.departement }}</p>
-     
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div>
-  <app-sidenavigation></app-sidenavigation>
-</div>
+
+
+  
+  
+   

@@ -8,7 +8,7 @@ export interface VisiteMedicale {
     dateEmbauche: Date;
     typeDeSuivi: string;
     typeDeVisite: string;
-    dateVisite: Date;
+    dateVisite: Date ;
     renouvelle: string;
     commentaire: string;
     observation: string;

@@ -1,98 +1,111 @@
-body{
-    background:#ffffff;
-    padding-left: 260px;
-    padding-right: 25px;
-    margin-top: 15px;
-    margin-bottom: 20px;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-.chart-container {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .chart {
-    flex: 1;
-    margin-right: 20px;
-  }
-  
-  
-
-#page-wrapper {
-    padding: 15px 25px;
-}
-.card {
-    background-color: #fff;
-    border-radius: 10px;
-    border: none;
-    position: relative;
-    margin-bottom: 30px;
-    box-shadow: 0 0.46875rem 2.1875rem rgba(90,97,105,0.1), 0 0.9375rem 1.40625rem rgba(90,97,105,0.1), 0 0.25rem 0.53125rem rgba(90,97,105,0.12), 0 0.125rem 0.1875rem rgba(90,97,105,0.1);
-}
-.l-bg-cherry {
-    background: linear-gradient(to right, #74373c, rgb(229, 23, 54)) !important;
-    color: #fff;
-}
-
-.l-bg-blue-dark {
-    background: linear-gradient(to right, #373b44, #4286f4) !important;
-    color: #fff;
-}
-
-.l-bg-green-dark {
-    background: linear-gradient(to right, #0a504a, #38ef7d) !important;
-    color: #fff;
-}
-
-.l-bg-orange-dark {
-    background: linear-gradient(to right, #a86008, #ffba56) !important;
-    color: #fff;
-}
-
-.card .card-statistic-3 .card-icon-large .fas, .card .card-statistic-3 .card-icon-large .far, .card .card-statistic-3 .card-icon-large .fab, .card .card-statistic-3 .card-icon-large .fal {
-    font-size: 110px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-        
-    
-}
-
-.card .card-statistic-3 .card-icon {
+.creative-title {
     text-align: center;
-    line-height: 50px;
-    margin-left: 15px;
-    color: #000;
-    position: absolute;
-    right: 5px;
-    top: 20px;
-    opacity: 0.1;
+    font-size: 3em;
+    color: white;
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    padding: 20px;
+    margin: 0;
+    animation: colorChange 5s infinite alternate;
+}
+
+@keyframes colorChange {
+    0% {
+        background: linear-gradient(90deg, #ff8a00, #e52e71);
+    }
+    20% {
+        background: linear-gradient(90deg, #34e89e, #0f3443);
+    }
+    40% {
+        background: linear-gradient(90deg, #ff6f61, #6a1b9a);
+    }
+    60% {
+        background: linear-gradient(90deg, #f9c80e, #d8336c);
+    }
+    80% {
+        background: linear-gradient(90deg, #3498db, #2ecc71);
+    }
+    100% {
+        background: linear-gradient(90deg, #e52e71, #ff8a00);
+    }
 }
 
 
-  
-
-.l-bg-cyan {
-    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
-    color: #fff;
+.dashboard-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjust as needed for spacing between items */
+    margin-left: 250px;
+    padding: 20px;
+    animation: fadeIn 1s ease-in-out;
 }
 
-.l-bg-green {
-    background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
-    color: #fff;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.l-bg-orange {
-    background: linear-gradient(to right, #f9900e, #ffba56) !important;
-    color: #fff;
+.dashboard-item {
+    flex: 1 1 30%; /* Flex properties for responsive behavior */
+    max-width: calc(33.33% - 20px); /* Responsive three-column layout */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Example: Add box-shadow for a professional look */
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: slideUp 0.5s ease forwards;
 }
 
-.l-bg-cyan {
-    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
-    color: #fff;
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-.chart-container {
-    width: 100%;
-    height: 400px;
-  }
+.dashboard-item:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.dashboard-item:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.dashboard-item:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.dashboard-item:nth-child(4) {
+    animation-delay: 0.8s;
+}
+
+.dashboard-item:nth-child(5) {
+    animation-delay: 1s;
+}
+
+.dashboard-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .dashboard-item {
+        max-width: 100%; /* Full width on smaller screens */
+    }
+}

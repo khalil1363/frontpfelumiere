@@ -1,7 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Component,OnInit,ViewChild } from "@angular/core";
-
-
+import { Component, OnInit, ViewChild } from "@angular/core";
 
 import {
   ApexNonAxisChartSeries,
@@ -22,22 +20,22 @@ export type ChartOptions = {
   fill: ApexFill;
   stroke: ApexStroke;
 };
+
 @Component({
   selector: 'app-actionrelise',
   templateUrl: './actionrelise.component.html',
   styleUrls: ['./actionrelise.component.css']
 })
-
-export class actionreliseComponent implements OnInit   {
+export class actionreliseComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   public plannings: Planning[] = [];
   public filteredPlannings: Planning[] = [];
-  public sumCoutreel: number = 0;
+  public formationCount: number = 0; // Renamed to formationCount for clarity
 
   constructor(private planningService: PlanningService, private http: HttpClient) {
     this.chartOptions = {
-      series: [75],
+      series: [0],
       chart: {
         height: 350,
         type: "radialBar",
@@ -66,7 +64,7 @@ export class actionreliseComponent implements OnInit   {
           track: {
             background: "#fff",
             strokeWidth: "67%",
-            margin: 0, // margin is in pixels
+            margin: 0,
             dropShadow: {
               enabled: true,
               top: -3,
@@ -75,7 +73,6 @@ export class actionreliseComponent implements OnInit   {
               opacity: 0.35
             }
           },
-
           dataLabels: {
             show: true,
             name: {
@@ -86,7 +83,7 @@ export class actionreliseComponent implements OnInit   {
             },
             value: {
               formatter: function(val) {
-                return parseInt(val.toString(), 10).toString();
+                return `${val}`; // Show value as is (number of formations)
               },
               color: "#111",
               fontSize: "36px",
@@ -111,20 +108,17 @@ export class actionreliseComponent implements OnInit   {
       stroke: {
         lineCap: "round"
       },
-      labels: ["somme dt"]
+      labels: ["Nombre de formations"]
     };
   }
 
-  calculateSumCoutreel(): void {
-    // Filter plannings by statusPlannig "realiser" and calculate sum of coutreel
-    this.sumCoutreel = this.filteredPlannings
-      .filter((p) => p.statusPlannig === "realiser")
-      .reduce(
-        (sum, p) => sum + parseFloat(p.coutreel.replace(",", ".")), // Assuming coutreel is numeric
-        0
-      );
-    // Update chart series with the calculated sum
-    this.chartOptions.series = [this.sumCoutreel];
+  calculateFormationCount(): void {
+    // Filter plannings by statusPlannig "realiser" and count them
+    this.formationCount = this.filteredPlannings
+      .filter((p) => p.statusPlannig.toLowerCase() === "realiser").length;
+    
+    // Update chart series with the calculated count
+    this.chartOptions.series = [this.formationCount];
   }
 
   filterByStatus(status: string): void {
@@ -132,17 +126,18 @@ export class actionreliseComponent implements OnInit   {
     this.filteredPlannings = this.plannings.filter(
       (p) => p.statusPlannig.toLowerCase() === status.toLowerCase()
     );
-    // Recalculate sum of coutreel for the filtered data
-    this.calculateSumCoutreel();
+    // Recalculate count of formations for the filtered data
+    this.calculateFormationCount();
   }
+
   ngOnInit(): void {
     // Fetch all plannings from backend
     this.planningService.getAllPlannings().subscribe((plannings) => {
       this.plannings = plannings;
       // Initialize filteredPlannings with all plannings initially
       this.filteredPlannings = [...this.plannings];
-      // Calculate initial sum of coutreel
-      this.calculateSumCoutreel();
+      // Calculate initial count of formations
+      this.calculateFormationCount();
     });
   }
 }

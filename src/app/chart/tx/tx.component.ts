@@ -10,6 +10,7 @@ import {
 } from "ng-apexcharts";
 import { Planning } from "src/app/model/Planning";
 import { PlanningService } from "src/app/service/planning.service";
+
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
@@ -33,7 +34,6 @@ export class txcomponent implements OnInit {
 
   constructor(private planningService: PlanningService, private http: HttpClient) {
     this.chartOptions = {
-      
       series: [0] ,
       chart: {
         height: 350,
@@ -82,7 +82,7 @@ export class txcomponent implements OnInit {
             },
             value: {
               formatter: function(val) {
-                return val + "";
+                return `${val.toFixed(2)}%`; // Show value as percentage with 2 decimal points
               },
               color: "#111",
               fontSize: "36px",
@@ -107,41 +107,23 @@ export class txcomponent implements OnInit {
       stroke: {
         lineCap: "round"
       },
-      labels: ["Tx de conformité"]
+      labels: [""]
     };
   }
 
   calculateAvgDays(): void {
-
-
     const realiserPlannings = this.plannings.filter(p => p.statusPlannig.toLowerCase() === "realiser");
 
     if (realiserPlannings.length > 0) {
-
-
       let totalDays = 0.00;
       realiserPlannings.forEach(p => {
-       
-       
-        let x:number = parseFloat(p.coutreel)
-        console.log("x="+x)
-        let h:number=parseFloat(p.budgetPrevisionnel)
-       console.log("h="+h)
-        
-   
-        console.log( "x/h"+x/h)
-        if(h==0)
-          console.log("impo")
-else
-        totalDays += (x/h);
+        let x: number = parseFloat(p.coutreel);
+        let h: number = parseFloat(p.budgetPrevisionnel);
+        if (h !== 0) {
+          totalDays += (x / h) * 100; // Calculate percentage
+        }
       });
-      console.log(totalDays)
-
-      this.avgDays = Math.round(totalDays*1000)/1000;
-
-
-
-
+      this.avgDays = Math.round((totalDays / realiserPlannings.length) * 100) / 100; // Average percentage
 
       this.chartOptions.series = [this.avgDays];
     } else {

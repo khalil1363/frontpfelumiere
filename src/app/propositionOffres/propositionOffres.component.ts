@@ -7,6 +7,7 @@ import { PropositionOffre } from '../model/PropositionOffre';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { PropositionOffreService } from '../service/proposition-offre-service.service';
 import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 
@@ -67,6 +68,9 @@ export class propositionOffresComponent implements OnInit {
   }
 
   
+  public editFormationInfo(offre: PropositionOffre) {
+    this.clickButton('openFormationEdit');
+  }
 
   public addNewProposition(offreEmploiForm: NgForm): void {
     if (offreEmploiForm.valid) {
@@ -164,4 +168,34 @@ export class propositionOffresComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
+
+  updaterec(editFormationForm: NgForm): void {
+  
+
+    const formValue = editFormationForm.value;
+  
+   
+  
+    const formData: FormData = this.propositionOffreService.createMouvementFormData(formValue);
+  
+    if (editFormationForm.valid) {
+      this.subscriptions.push(
+        this.propositionOffreService.updateoffre(formData).subscribe(
+          (response: PropositionOffre) => {
+            this.notificationService.notify(NotificationType.SUCCESS, 'planning updated successfully');
+            this.getPropositionOffres();
+            this.clickButton('new-proposition-close');
+            
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.notificationService.notify(NotificationType.ERROR, 'Failed to update planning');
+          }
+        )
+      );
+    }
+
+
+
+  }
+
 }

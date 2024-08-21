@@ -16,7 +16,7 @@ export class VisiteMedicaleService {
     return this.http.get<VisiteMedicale[]>(`${this.apiUrl}/list`);
   }
 
-  addVisiteMedicale(visiteMedicale: VisiteMedicale): Observable<VisiteMedicale> {
+  addVisiteMedicale(visiteMedicale: any): Observable<VisiteMedicale> {
     return this.http.post<VisiteMedicale>(`${this.apiUrl}/add`, visiteMedicale);
   }
 

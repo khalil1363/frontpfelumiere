@@ -1,3 +1,6 @@
+<div>
+  <app-sidenavigation></app-sidenavigation>
+</div>
 <body>
     <i style="color: blue; font-size: 20px;" class="fas fa-user"></i>
     <span class="text" style="color: blue; font-size: large;">Gestion des propositions de formation:</span>
@@ -50,7 +53,7 @@
         <tbody>
           <tr *ngFor="let proposition of propositions " class="text-center">
             <td >{{ proposition.module }}</td>
-            <td>{{ proposition.typePropo }}</td>
+            <td>{{ proposition.typePropo}}</td>
             <td>{{ proposition.categorie }}</td>
             <td>{{ proposition.description }}</td>
             <td >{{ proposition?.proposePar }}</td>
@@ -109,8 +112,10 @@
       </div>
     </div>
     <button [hidden]="true" type="button" id="openPropositionInfo" data-toggle="modal" data-target="#viewPropositionModal"></button>
-    <button [hidden]="true" type="button" id="openPropositionEdit" data-toggle="modal" data-target="#editPropositionModal"></button>
-  
+    <button type="button" class="btn btn-primary" id="openPropositionEdit" data-toggle="modal" data-target="#editPropositionModal" style="display: none;"></button>
+
+    <button type="button" id="closeEditPropositionModal" data-dismiss="modal" style="display: none;"></button>
+
     <!-- Modal: View Proposition -->
     <div class="modal fade bd-example-modal-lg" id="viewPropositionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -282,94 +287,111 @@
     
 
   
-    <!-- Modal: Edit Proposition -->
-    <div class="modal fade bd-example-modal-lg" id="editPropositionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title text-center" id="exampleModalLongTitle">Edit Proposition</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form #propositionForm="ngForm" (ngSubmit)="updateProposition(propositionForm)">
-            <div class="modal-body">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-6">
-                    <label>Module:</label>
-                    <input type="text" class="form-control" name="module" ngModel required>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Type:</label>
-                    <input type="text" class="form-control" name="type" ngModel required>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Categorie:</label>
-                    <input type="text" class="form-control" name="categorie" ngModel required>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Description:</label>
-                    <textarea class="form-control" rows="3" name="description" ngModel required></textarea>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Proposé par:</label>
-                    <input type="text" class="form-control" name="proposePar" ngModel required>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Poste proposé par:</label>
-                    <input type="text" class="form-control" name="posteProposerPar" ngModel required>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Cabinet proposé:</label>
-                    <input type="text" class="form-control" name="cabinetpropo" ngModel>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Département:</label>
-                    <input type="text" class="form-control" name="departement" ngModel required>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Objectif:</label>
-                    <input type="text" class="form-control" name="objectif" ngModel required>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Activité:</label>
-                    <input type="text" class="form-control" name="activite" ngModel required>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Observation:</label>
-                    <input type="text" class="form-control" name="observation" ngModel>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Formateur proposé:</label>
-                    <input type="text" class="form-control" name="formateurPropose" ngModel>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Période souhaitée:</label>
-                    <input type="date" class="form-control" name="prdSouhaite" ngModel required>
-                  </div>
-                  <div class="col-md-6">
-                    <label>Date de création:</label>
-                    <input type="date" class="form-control" name="DateCreation" ngModel required>
-                  </div>
-                 
-                  <div class="col-md-6">
-                    <label for="employeeNames">Employee Names:</label>
-                    <input type="text" class="form-control" name="employeeNames" ngModel required placeholder="Enter names separated by commas">
-                  </div>
 
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" id="edit-proposition-close">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-          </form>
-        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="z-index:1" class="modal fade" id="editPropositionModal" tabindex="-1" role="dialog" aria-labelledby="editPropositionModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editPropositionModalLabel">Edit Proposition Formation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <form #editPropositionForm="ngForm" (ngSubmit)="updateprop(editPropositionForm)">
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              
+              
+              
+              <div class="col-md-6">
+                <label>idPropo:</label>
+                <input  type="text"   class="form-control"  id="idPropo" name="idPropo"  [(ngModel)]="pl.idProposition" required>
+              </div>
+
+
+              <div class="col-md-6">
+                <label>Module:</label>
+                <input  type="text"   class="form-control"  id="module" name="module"  [(ngModel)]="pl.module" required>
+              </div>
+              <div class="col-md-6">
+                <label>Type:</label>
+                <input type="text" class="form-control" name="type" ngModel required>
+              </div>
+              <div class="col-md-6">
+                <label>Categorie:</label>
+                <input type="text" class="form-control" name="categorie" [(ngModel)]="pl.categorie" required>
+              </div>
+              <div class="col-md-6">
+                <label>Description:</label>
+                <textarea class="form-control" rows="3" name="description" ngModel [(ngModel)]="pl.description"></textarea>
+              </div>
+              <div class="col-md-6">
+                <label>Proposé par:</label>
+                <input type="text" class="form-control" name="proposePar" [(ngModel)]="pl.proposePar" required>
+              </div>
+              <div class="col-md-6">
+                <label>Poste proposé par:</label>
+                <input type="text" class="form-control" name="posteProposerPar" [(ngModel)]="pl.posteProposerPar" required>
+              </div>
+              <div class="col-md-6">
+                <label>Cabinet proposé:</label>
+                <input type="text" class="form-control" name="cabinetpropo" [(ngModel)]="pl.cabinetproposer">
+              </div>
+              <div class="col-md-6">
+                <label>Département:</label>
+                <input type="text" class="form-control" name="departement" [(ngModel)]="pl.departement" required>
+              </div>
+              <div class="col-md-6">
+                <label>Objectif:</label>
+                <input type="text" class="form-control" name="objectif" [(ngModel)]="pl.objectif" required>
+              </div>
+              <div class="col-md-6">
+                <label>Activité:</label>
+                <input type="text" class="form-control" name="activite" [(ngModel)]="pl.activite" required>
+              </div>
+              <div class="col-md-6">
+                <label>Observation:</label>
+                <input type="text" class="form-control" name="observation" [(ngModel)]="pl.observation">
+              </div>
+              <div class="col-md-6">
+                <label>Formateur proposé:</label>
+                <input type="text" class="form-control" name="formateurPropose" [(ngModel)]="pl.formateurPropose">
+              </div>
+              <div class="col-md-6">
+                <label>Période souhaitée:</label>
+                <input type="date" class="form-control" name="prdSouhaite" [(ngModel)]="pl.periodeSouhaite" required>
+              </div>
+             
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="new-proposition-close">Close</button>
+          <button type="submit" class="btn btn-primary" id="new-proposition-save">Save</button>
+        </div>
+      </form>
     </div>
-  </body>
-  <div>
-    <app-sidenavigation></app-sidenavigation>
   </div>
+</div>
+
+  </body>
+ 

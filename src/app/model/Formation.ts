@@ -1,6 +1,6 @@
 import { Employee } from "./Employee";
 
-export interface Formation {
+export class Formation {
   idFormation: number;
   module: string;
   type: string;
@@ -16,4 +16,22 @@ export interface Formation {
   observation: string;
   budgetPrevisionnel: string;
   participants: Employee[];
+
+  constructor() {
+    this.idFormation = 0;
+    this.module = '';
+    this.type = '';
+    this.categorie = '';
+    this.description = '';
+    this.proposePar = '';
+    this.posteProposerPar = '';
+    this.cabinetproposer = '';
+    this.departement = '';
+    this.objectif = '';
+    this.activite = '';
+    this.formateurPropose = '';
+    this.observation = '';
+    this.budgetPrevisionnel = '';
+
+  }
 }

@@ -57,4 +57,40 @@ export class PropositionOffreService {
   deletePropositionOffre(idProposition: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/delete/${idProposition}`);
   }
+
+  formatDate(date: Date): string {
+    if (!(date instanceof Date)) {
+      date = new Date(date);
+    }
+
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+
+    return `${year}-${month}-${day}`;
+  }
+
+  public createMouvementFormData(propositionFormation: any): FormData {
+    const formData = new FormData();
+    formData.append('idOffreProp', propositionFormation.idOffreProp);
+    formData.append('departement', propositionFormation.departement);
+    formData.append('jobTitre', propositionFormation.jobTitre);
+    formData.append('coutEmbauche', propositionFormation.coutEmbauche);
+    formData.append('duree', propositionFormation.duree);
+    formData.append('motifRecretement', propositionFormation.motifRecretement);
+    formData.append('dateLancement', this.formatDate(propositionFormation.dateLancement));
+    formData.append('dateEmbauche', this.formatDate(propositionFormation.dateEmbauche));
+    formData.append('recruteur', propositionFormation.recruteur);
+    formData.append('modeRecrutement', propositionFormation.modeRecrutement);
+    formData.append('statusPropo', propositionFormation.statusPropo);
+  
+   
+    return formData;
+  }
+
+  updateoffre(formData: FormData): Observable<PropositionOffre> {
+    return this.http.post<PropositionOffre>(`${this.baseUrl}/update`, formData);
+  }
+
+
 }

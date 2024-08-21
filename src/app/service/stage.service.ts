@@ -22,7 +22,7 @@ export class StageService {
     return this.http.get<Stage>(`${this.baseUrl}/getone/${idStage}`);
   }
 
-  addStage(stage: Stage): Observable<Stage> {
+  addStage(stage: any): Observable<Stage> {
     return this.http.post<Stage>(`${this.baseUrl}/add`, stage);
   }
 

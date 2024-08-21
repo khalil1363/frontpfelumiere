@@ -48,6 +48,18 @@ import { txcomponent } from './chart/tx/tx.component';
 
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { vesiteComponent } from './vesite/vesite.component';
+import { recapComponent } from './recap/recap.component';
+import { ChauffeurComponent } from './Chauffeur/Chauffeur.component';
+import { recDashbordComponent } from './recDashbord/recDashbord.component';
+import { conrecComponent } from './chart/conrec/conrec.component';
+import { moderecComponent } from './chart/moderec/moderec.component';
+import { dessitionComponent } from './chart/dessition/dessition.component';
+import { st } from './chart/inssta/st';
+import { typestageComponent } from './chart/typestage/typestage';
+import { Nbre } from './chart/Nbre/Nbre';
+import { effectife } from './effectife/effectife';
+import { cnfcpp } from './chart/cnfcpp/cnfcpp';
+import { pr } from './chart/pr/pr';
 
 
 @NgModule({
@@ -79,7 +91,20 @@ import { vesiteComponent } from './vesite/vesite.component';
     offresEmploiComponent,
     RecruitmentComponent,
     txcomponent,
-    vesiteComponent
+    vesiteComponent,
+    recapComponent,
+    ChauffeurComponent,
+    recDashbordComponent,
+    conrecComponent,
+    moderecComponent,
+    dessitionComponent,
+    st,
+    typestageComponent,
+    Nbre,
+    effectife,
+    cnfcpp,
+    pr
+    
     
   ],
   imports: [
@@ -97,7 +122,8 @@ import { vesiteComponent } from './vesite/vesite.component';
     MatInputModule,
     ReactiveFormsModule,   
     NgApexchartsModule, 
-    NzSelectModule
+    NzSelectModule,
+    
   ],
   providers: [NotificationService , AuthenticationGuard ,AuthenticationService , UserService ,
      { provide :HTTP_INTERCEPTORS , useClass : AuthInterceptor , multi :true }] ,

@@ -1,156 +1,94 @@
-
-
-<div class="sidebar close" #sidebar>
-  <a class="logo">
-    <img src="https://www.keejob.com/media/recruiter/recruiter_14881/logo-14881-20180206-192420.JPG" (click)="toggleSidebar()" class="rounded">
-</a>
-    
-    <ul class="nav-links">
-     <li >
-      <a routerLink="/dashbord-chart">
-        <i class='bx bx-grid-alt'></i>
-        <span class="link_name">Dashboard</span>
-      </a>
-      <ul class="sub-menu blank">
-        <li><a class="link_name" routerLink="/dashbord-chart" >Dashboard</a></li>
-      </ul>
-    </li>
-    <br><hr>
-    <li>
-      <div class="iocn-link">
-        <a>
-          <i class='bx bx-collection'></i>
-          <span class="link_name">Gestion D'administration</span>
-          
-        </a>
-         <br> <hr>
-        <i class='bx bxs-chevron-down arrow'></i>
-      </div>
-      <ul class="sub-menu">
-        <li ><a class="link_name" >Gestion D'administration</a></li>
-        <li><a routerLink="/user/management">Users</a></li>
-      </ul>
-    </li>
-    <br><hr>
-    <li>
-      <div class="iocn-link">
-        <a>
-          <i class='bx bx-collection'></i>
-          <span class="link_name">Gestion de stagiar</span>
-        </a>
-        <i class='bx bxs-chevron-down arrow'></i>
-      </div>
-      <ul class="sub-menu">
-        <li ><a class="link_name" >Gestion de stagiar</a></li>
-        <li><a routerLink="/stagier">ajouter stagiar</a></li>
-        <li><a routerLink="/stage">ajouter Stage</a></li>
-      </ul>
-    </li>
-    <br><hr>
-
-    <li>
-      <div class="iocn-link">
-        <a>
-          <i class='bx bx-collection'></i>
-          <span class="link_name">Gestion de recretement</span>
-        </a>
-        <i class='bx bxs-chevron-down arrow'></i>
-      </div>
-      <ul class="sub-menu">
-        <li ><a class="link_name" >Gestion de recretement</a></li>
-        <li><a routerLink="/candidat">candidats</a></li>
-        <li><a routerLink="/propooffre">ajouter proposition</a></li>
-        <li><a routerLink="/offre">list des offre</a></li>
-        <li><a routerLink="/recretemnt">recretement</a></li>
-      </ul>
-    </li>
-    <br><hr>
-
-
-    <li>
-      <div class="iocn-link">
-        <a>
-          <i class='bx bx-collection'></i>
-          <span class="link_name">Gestion de vesite medicale</span>
-        </a>
-        <i class='bx bxs-chevron-down arrow'></i>
-      </div>
-      <ul class="sub-menu">
-        <li ><a class="link_name" >Gestion de vesite medicale</a></li>
-        <li><a routerLink="/vesite">Add vesite</a></li>
-      </ul>
-    </li>
-    <br><hr>
-
-
-
-    <li>
-      <div class="iocn-link">
-        <a>
-          <i class='bx bx-collection'></i>
-          <span class="link_name">Gestion de choufeure</span>
-        </a>
-        <i class='bx bxs-chevron-down arrow'></i>
-      </div>
-      <ul class="sub-menu">
-        <li ><a class="link_name" >Gestion de choufeure</a></li>
-        <li><a routerLink="/stagier">Add choufeure</a></li>
-      </ul>
-    </li>
-    <br><hr>
-
-
-
-
-
-    <li>
-      <div class="iocn-link">
-        <a>
-          <i class='bx bx-collection'></i>
-          <span class="link_name">Gestion de Formation</span>
-        </a>
-        <i class='bx bxs-chevron-down arrow'></i>
-      </div>
-      <ul class="sub-menu">
-        <li ><a class="link_name" >Gestion de Formatio</a></li>
-        <li><a routerLink="/formation">Listes des formation</a></li>
-        <li><a routerLink="/propositionformation">Besoin en formation</a></li>
-        <li><a routerLink="/planning"> planning</a></li>
-        <li><a routerLink="/dashbord-formation"> dashbord</a></li>
-      </ul>
-    </li>
-    <br><hr>
-    <li>
-      <a routerLink="/profile">
-        <i class='bx bxs-user-account'></i>
-        <span class="link_name">Profile</span>
-      </a>
-      <ul class="sub-menu blank">
-        <li><a class="link_name" routerLink="/profile" >Profile</a></li>
-      </ul>
-    </li>
-    <br><hr>
-    <li>
-      <a  routerLink="/setting" >
-        <i class='bx bx-cog'></i>
-        <span class="link_name">Setting</span>
-      </a>
-      <ul class="sub-menu blank">
-        <li><a class="link_name"  routerLink="/setting">Setting</a></li>
-      </ul>
-    </li>  
-    <br>
-    <li>
-      <div class="profile-details">
-        <div class="profile-content" routerLink="/profile"  >
-          <img src= {{connectedUser.profileImageUrl}} class="img-fluid rounded-circle" alt="profile-img">
+<div class="container-fluid" style="border-radius: 10px;">
+  <nav class="navbar" style="background-color:#45362d; border-radius: 10px;"  >
+    <div class="container-fluid">
+      <div style="margin-left: 270px;" class="profile-details">
+        <div class="name-job" routerLink="/profile">
+          <div class="profile_name">
+            <h1 style="color:aliceblue;">{{connectedUser.username}}</h1>
+          </div>
+          <div class="job">
+            <h5 style="color:aliceblue;">{{connectedUser.role}}</h5>
+          </div>
         </div>
-        <div class="name-job" routerLink="/profile" >
-          <div class="profile_name">{{connectedUser.username}}</div>
-          <div class="job">{{connectedUser.role}}</div>
-        </div>
-        <a (click)="onLogOut()"><i class='bx bx-log-out' ></i></a> 
       </div>
-    </li>
-  </ul>
+      <div class="float-end">
+        <button class="btn btn-outline-light" type="button" (click)="onLogOut()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="row">
+    <!-- Sidebar -->
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar" [class.d-none]="!sidebarVisible" style="background-color: rgb(248 149 66);">
+      <a class="logo">
+        <img src="https://www.keejob.com/media/recruiter/recruiter_14881/logo-14881-20180206-192420.JPG" (click)="toggleSidebar()" class="rounded">
+      </a>
+      <div class="position-sticky">
+        <div class="list-group list-group-flush mx-3 mt-4">
+          <a class="list-group-item list-group-item-action py-2 ripple" aria-current="true" routerLink="/dashbord-chart">
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
+          </a>
+          <a class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#adminMenu" role="button" aria-expanded="false" aria-controls="adminMenu">
+            <i class="fas fa-user-cog fa-fw me-3"></i><span>Gestion D'administration</span>
+          </a>
+          <div class="collapse" id="adminMenu">
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/user/management">Users</a>
+          </div>
+          <a class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#stagiarMenu" role="button" aria-expanded="false" aria-controls="stagiarMenu">
+            <i class="fas fa-users fa-fw me-3"></i><span>Gestion de stagiar</span>
+          </a>
+          <div class="collapse" id="stagiarMenu">
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/stagier">ajouter stagiar</a>
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/stage">ajouter Stage</a>
+          </div>
+          <a class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#recretementMenu" role="button" aria-expanded="false" aria-controls="recretementMenu">
+            <i class="fas fa-briefcase fa-fw me-3"></i><span>Gestion de recretement</span>
+          </a>
+          <div class="collapse" id="recretementMenu">
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/candidat">candidats</a>
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/propooffre">ajouter proposition</a>
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/offre">list des offre</a>
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/recretemnt">recretement</a>
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/recdash">dashbord</a>
+          </div>
+          <a class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#medicaleMenu" role="button" aria-expanded="false" aria-controls="medicaleMenu">
+            <i class="fas fa-user-md fa-fw me-3"></i><span>Gestion de vesite medicale</span>
+          </a>
+          <div class="collapse" id="medicaleMenu">
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/vesite">Add vesite</a>
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/recap">recap</a>
+          </div>
+          <a class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#chauffeurMenu" role="button" aria-expanded="false" aria-controls="chauffeurMenu">
+            <i class="fas fa-car fa-fw me-3"></i><span>Gestion de choufeure</span>
+          </a>
+          <div class="collapse" id="chauffeurMenu">
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/Chauffeur">choufeure</a>
+          </div>
+          <a class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#formationMenu" role="button" aria-expanded="false" aria-controls="formationMenu">
+            <i class="fas fa-chalkboard-teacher fa-fw me-3"></i><span>Gestion de Formation</span>
+          </a>
+          <div class="collapse" id="formationMenu">
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/formation">Listes des formation</a>
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/propositionformation">Besoin en formation</a>
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/planning"> planning</a>
+            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/dashbord-formation"> dashbord</a>
+          </div>
+          <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/profile">
+            <i class="fas fa-user fa-fw me-3"></i><span>Profile</span>
+          </a>
+          <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/setting">
+            <i class="fas fa-cog fa-fw me-3"></i><span>Setting</span>
+          </a>
+          <a class="list-group-item list-group-item-action py-2 ripple" (click)="onLogOut()">
+            <i class="fas fa-sign-out-alt fa-fw me-3"></i><span>Logout</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="col-md-9 ms-md-auto col-lg-10 px-md-4">
+      <!-- Your main content here -->
+    </main>
+  </div>
 </div>

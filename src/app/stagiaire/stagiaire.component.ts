@@ -9,6 +9,8 @@ import { Employee } from '../model/Employee';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Stage } from '../model/Stage';
 import { StageService } from '../service/stage.service';
+import { NzSelectSizeType } from 'ng-zorro-antd/select';
+import { PropositionFormationService } from '../service/proposition-formation.service';
 
 @Component({
   selector: 'app-stagier',
@@ -35,24 +37,49 @@ export class StagierComponent implements OnInit, OnDestroy {
   selectedStage: Stage;
   filteredStages: Observable<Stage[]>; 
 
+/////////////////////////////////////////
+listOfOption: Array<{ label: string; value: string }> = [];
+size: NzSelectSizeType = 'default';
+singleValue = 'a10';
+multipleValue = ['a10', 'c12'];
+tagValue = [];
+allEmployees: { name: string }[] = [];
+//////////////////////
+list: Array<{ labell: string; valuee: string }> = [];
+siz: NzSelectSizeType = 'default';
+single = 'a10';
+multiple = ['a10', 'c12'];
+tag= [];
 
-
-  
+/////////////////
   filteredSupervisors: Observable<Employee[]>;
   supervisorControl = new FormControl();
   selectedSupervisor: Employee;
   constructor(private stagierService: StagierService,
                private notificationService: NotificationService 
                ,private httpClient: HttpClient,private fb: FormBuilder,
-               private satgeService : StageService 
+               private satgeService : StageService ,
+               private propositionService: PropositionFormationService,
+               
               ) { 
                }
   
+
+              
+
+
+
+             
+
+
+
+
 
   ngOnInit(): void {
     this.getStagiers(true);
     this.getEmployees(false);
     this.getStages(false);
+    this.getstag(false);
     this.filteredSupervisors = this.supervisorControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterSupervisors(value))
@@ -62,7 +89,7 @@ export class StagierComponent implements OnInit, OnDestroy {
       matricule: ['', Validators.required], // Added matricule control
       // Other form controls...
     });
-
+    this.getemploye(true)
     this.filteredStages = this.stageReferenceControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterStages(value))
@@ -169,13 +196,15 @@ export class StagierComponent implements OnInit, OnDestroy {
 
 
   public addNewStagier(stagierForm: NgForm): void {
+   
     if (stagierForm.valid) {
       this.stagierService.addStagier(stagierForm.value).subscribe(
         (response: Stagier) => {
-          this.sendNotification(NotificationType.SUCCESS, 'Stagier added successfully');
           this.getStagiers(false);
+          this.sendNotification(NotificationType.SUCCESS, 'Stagier added successfully');
+         
           document.getElementById('new-stagier-close')?.click();
-          stagierForm.resetForm();
+         
         },
         (error) => {
           this.sendNotification(NotificationType.ERROR, 'Failed to add stagier');
@@ -183,9 +212,8 @@ export class StagierComponent implements OnInit, OnDestroy {
       );
     }
   }
-
+ 
   public selectStagierForEdit(stagier: Stagier): void {
-    this.selectedStagier = { ...stagier };
     this.clickButton('openStagierEdit');
   }
 
@@ -204,7 +232,9 @@ export class StagierComponent implements OnInit, OnDestroy {
       );
     }
   }
-
+  public editFormationInfo(editFormation: Stagier): void {
+    this.clickButton('openFormationEdit');
+  }
   public deleteStagier(stagierId: number): void {
     if (confirm('Are you sure you want to delete this stagier?')) {
       this.stagierService.deleteStagier(stagierId).subscribe(
@@ -235,5 +265,87 @@ export class StagierComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
+  ///////////////////////////
+  public getemploye(showNotification: boolean): void {
+    this.refreshing = true;
+    this.subscriptions.push(
+      this.propositionService.getAllEmployees().subscribe(
+        (response) => {
+          const children: Array<{ label: string; value: string }> = [];
+          response.forEach((emp: Employee) =>{
+            children.push({ label: emp.nomPrenom, value: emp.mat });
+
+          })
+          this.listOfOption = children;
+
+          this.refreshing = true;
+          if (showNotification) {
+            this.sendNotification(NotificationType.SUCCESS, 'empl loaded successfully');
+          }
+        },
+        (error) => {
+          this.refreshing = false;
+          this.sendNotification(NotificationType.ERROR, 'Failed to load propositions');
+        }
+      )
+    );
+  }
+  /////////////////////
+ 
+  public getstag(showNotification: boolean): void {
+    this.refreshing = true;
+    this.subscriptions.push(
+      this.satgeService.getAllStages().subscribe(
+        (response) => {
+          const childrenn: Array<{ labell: string; valuee: string }> = [];
+          response.forEach((emp: Stage) =>{
+            childrenn.push({ labell: emp.theme, valuee: emp.reference });
+
+          })
+          this.list = childrenn;
+
+          this.refreshing = true;
+          if (showNotification) {
+            this.sendNotification(NotificationType.SUCCESS, 'stage loaded successfully');
+          }
+        },
+        (error) => {
+          this.refreshing = false;
+          this.sendNotification(NotificationType.ERROR, 'Failed to load stage');
+        }
+      )
+    );
+  }
+
+
   
+  updaterec(editFormationForm: NgForm): void {
+  
+
+    const formValue = editFormationForm.value;
+  
+   
+  
+    const formData: FormData = this.stagierService.createMouvementFormData(formValue);
+  
+    if (editFormationForm.valid) {
+      this.subscriptions.push(
+        this.stagierService.updstage(formData).subscribe(
+          (response: Stagier) => {
+            this.sendNotification(NotificationType.SUCCESS, 'planning updated successfully');
+            this.getStagiers(true);
+            this.clickButton('new-proposition-close');
+            
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.sendNotification(NotificationType.ERROR, 'Failed to update planning');
+          }
+        )
+      );
+    }
+
+
+
+  }
+  //////////////////////
 }

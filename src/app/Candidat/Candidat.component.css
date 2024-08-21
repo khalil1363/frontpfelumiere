@@ -2,8 +2,7 @@ body{
     background:#ffffff;
     padding-left: 260px;
     padding-right: 25px;
-    margin-top: 15px;
-    margin-bottom: 20px;
+   
 }
 
 
@@ -42,3 +41,10 @@ body{
     outline: none;
     background: #d4d4d4;
 }
+
+::ng-deep .modal-backdrop {
+    z-index: 0;
+  }
+  nz-select {
+    width: 100%;
+  }

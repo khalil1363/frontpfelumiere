@@ -7,7 +7,7 @@
     <i style="color: blue;" class="fas fa-cog" ></i>
     <Span class="text"  style="color: blue; font-size: large;">  User Password Management </Span>
 
-    <div [hidden]="!isAdmin" >
+    <div >
     <form #resetPasswprdForm = "ngForm" (ngSubmit)="resetPassword(resetPasswprdForm)"> 
       <fieldset>
         <legend >reset Password</legend>

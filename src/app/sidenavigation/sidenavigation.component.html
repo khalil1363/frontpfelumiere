@@ -17,7 +17,7 @@
     </div>
   </nav>
 
-  <div class="row">
+  <div class="row" >
     <!-- Sidebar -->
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar" [class.d-none]="!sidebarVisible" style="background-color: rgb(248 149 66);">
       <a class="logo">
@@ -25,53 +25,53 @@
       </a>
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
-          <a class="list-group-item list-group-item-action py-2 ripple" aria-current="true" routerLink="/dashbord-chart">
+          <a  [hidden]="!dashbord  " class="list-group-item list-group-item-action py-2 ripple" aria-current="true" routerLink="/dashbord-chart">
             <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
           </a>
-          <a class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#adminMenu" role="button" aria-expanded="false" aria-controls="adminMenu">
+          <a  [hidden]="!administration  " class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#adminMenu" role="button" aria-expanded="false" aria-controls="adminMenu">
             <i class="fas fa-user-cog fa-fw me-3"></i><span>Gestion D'administration</span>
           </a>
           <div class="collapse" id="adminMenu">
             <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/user/management">Users</a>
           </div>
-          <a class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#stagiarMenu" role="button" aria-expanded="false" aria-controls="stagiarMenu">
+          <a   [hidden]="!formation"  class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#stagiarMenu" role="button" aria-expanded="false" aria-controls="stagiarMenu">
             <i class="fas fa-users fa-fw me-3"></i><span>Gestion de stagiar</span>
           </a>
           <div class="collapse" id="stagiarMenu">
             <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/stagier">ajouter stagiar</a>
             <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/stage">ajouter Stage</a>
           </div>
-          <a class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#recretementMenu" role="button" aria-expanded="false" aria-controls="recretementMenu">
-            <i class="fas fa-briefcase fa-fw me-3"></i><span>Gestion de recretement</span>
+          <a [hidden]="!recretement"  class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#recretementMenu" role="button" aria-expanded="false" aria-controls="recretementMenu">
+            <i  class="fas fa-briefcase fa-fw me-3"></i><span>Gestion de recretement</span>
           </a>
-          <div class="collapse" id="recretementMenu">
-            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/candidat">candidats</a>
-            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/propooffre">ajouter proposition</a>
-            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/offre">list des offre</a>
-            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/recretemnt">recretement</a>
-            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/recdash">dashbord</a>
+          <div  class="collapse" id="recretementMenu">
+            <a  [hidden]="isUser"class="list-group-item list-group-item-action py-2 ripple" routerLink="/candidat">candidats</a>
+            <a  class="list-group-item list-group-item-action py-2 ripple" routerLink="/propooffre">ajouter proposition</a>
+            <a [hidden]="isUser"class="list-group-item list-group-item-action py-2 ripple" routerLink="/offre">list des offre</a>
+            <a [hidden]="isUser" class="list-group-item list-group-item-action py-2 ripple" routerLink="/recretemnt">recretement</a>
+            <a  [hidden]="isUser"class="list-group-item list-group-item-action py-2 ripple" routerLink="/recdash">dashbord</a>
           </div>
-          <a class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#medicaleMenu" role="button" aria-expanded="false" aria-controls="medicaleMenu">
+          <a   [hidden]="!vesitemedicale" class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#medicaleMenu" role="button" aria-expanded="false" aria-controls="medicaleMenu">
             <i class="fas fa-user-md fa-fw me-3"></i><span>Gestion de vesite medicale</span>
           </a>
           <div class="collapse" id="medicaleMenu">
             <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/vesite">Add vesite</a>
             <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/recap">recap</a>
           </div>
-          <a class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#chauffeurMenu" role="button" aria-expanded="false" aria-controls="chauffeurMenu">
+          <a    [hidden]="!chauffeur"class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#chauffeurMenu" role="button" aria-expanded="false" aria-controls="chauffeurMenu">
             <i class="fas fa-car fa-fw me-3"></i><span>Gestion de choufeure</span>
           </a>
-          <div class="collapse" id="chauffeurMenu">
+          <div  class="collapse" id="chauffeurMenu">
             <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/Chauffeur">choufeure</a>
           </div>
-          <a class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#formationMenu" role="button" aria-expanded="false" aria-controls="formationMenu">
+          <a  [hidden]="!formation"   class="list-group-item list-group-item-action py-2 ripple" data-bs-toggle="collapse" href="#formationMenu" role="button" aria-expanded="false" aria-controls="formationMenu">
             <i class="fas fa-chalkboard-teacher fa-fw me-3"></i><span>Gestion de Formation</span>
           </a>
           <div class="collapse" id="formationMenu">
-            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/formation">Listes des formation</a>
-            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/propositionformation">Besoin en formation</a>
-            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/planning"> planning</a>
-            <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/dashbord-formation"> dashbord</a>
+            <a [hidden]="isUser" class="list-group-item list-group-item-action py-2 ripple" routerLink="/formation">Listes des formation</a>
+            <a [hidden]="!issuperadmin" class="list-group-item list-group-item-action py-2 ripple" routerLink="/propositionformation">Besoin en formation</a>
+            <a [hidden]="isUser"class="list-group-item list-group-item-action py-2 ripple" routerLink="/planning"> planning</a>
+            <a [hidden]="isUser" class="list-group-item list-group-item-action py-2 ripple" routerLink="/dashbord-formation"> dashbord</a>
           </div>
           <a class="list-group-item list-group-item-action py-2 ripple" routerLink="/profile">
             <i class="fas fa-user fa-fw me-3"></i><span>Profile</span>

@@ -31,7 +31,7 @@ export class StagierComponent implements OnInit, OnDestroy {
   
   supervisors: Employee[] = [];
 
- 
+  pl=new Stagier();
   stages: Stage[] = [];
   stageReferenceControl = new FormControl();
   selectedStage: Stage;
@@ -233,6 +233,7 @@ tag= [];
     }
   }
   public editFormationInfo(editFormation: Stagier): void {
+    this.pl = editFormation;
     this.clickButton('openFormationEdit');
   }
   public deleteStagier(stagierId: number): void {

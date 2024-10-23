@@ -7,6 +7,8 @@ import { PicklisteService } from '../service/pickliste.service';
 
 import { forkJoin } from 'rxjs';  
 import { PosteService } from '../service/poste.service';
+import { AuthenticationService } from '../service/authentication.service';
+import { Role } from '../enum/role';
 
 Chart.register(...registerables);
 
@@ -46,7 +48,8 @@ export class DashbordChartComponent implements OnInit {
   chart: Chart<'pie', number[], string>;
 
   constructor(private userService: UserService , private ligneProductionService: LigneProdctionService ,
-              private picklisteService : PicklisteService  , private  posteService : PosteService) { }
+              private picklisteService : PicklisteService  , private  posteService : PosteService,
+              private authenticationService :AuthenticationService) { }
 
   ngOnInit(): void {
 
@@ -137,5 +140,105 @@ export class DashbordChartComponent implements OnInit {
       });
     }
   }
+
+
+
+
+
+
+
+  /////////////////
+
+
+
+  
+  public get isAdmin(): boolean {
+    return this.getUserRole() === Role.ADMIN;
+  }
+  public get issuperadmin(): boolean {
+    return this.getUserRole() === Role.SUPERADMIN;
+  }
+  public get isAdminOrHR() : boolean {
+    return this.isRHFormation || this.isAdmin || this.issuperadmin;
+  }
+
+
+
+
+
+
+  public get dashbord():boolean {
+    return this.isAdmin || this.isRHFormation || this.isRHRecrutement || this.issuperadmin
+  }
+  
+
+  public get formation():boolean {
+    return  this.isRHFormation ||  this.issuperadmin
+  }
+  public get chauffeur():boolean {
+    return  this.isRHChauffeur || this.issuperadmin
+  }
+
+  public get recretement():boolean {
+    return  this.isRHRecrutement || this.issuperadmin
+  }
+  public get vesitemedicale():boolean {
+    return  this.isRHVisiteMedicale || this.issuperadmin
+  }
+
+  public get  administration():boolean {
+    return  this.isAdmin || this.issuperadmin
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  public get isUser(): boolean {
+    return this.getUserRole() === Role.USER;
+  }
+ 
+  public get isRHFormation(): boolean {
+    return this.getUserRole() === Role.RHFORMATION;
+  }
+  
+  public get isRHRecrutement(): boolean {
+    return this.getUserRole() === Role.RHRECRETEMENT;
+  }
+  
+  public get isRHChauffeur(): boolean {
+    return this.getUserRole() === Role.RHCHAUFFEUR;
+  }
+  
+  public get isRHVisiteMedicale(): boolean {
+    return this.getUserRole() === Role.RHVISITEMEDICALE;
+  }
+
+
+ 
+  
+  private getUserRole(): string {
+    return this.authenticationService.getUserFromLocalCache().role;
+  }
+  
+
+
+
+
+
 
 }

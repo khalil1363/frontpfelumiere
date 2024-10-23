@@ -3,7 +3,7 @@
 </div>
 <body>
   <i style="color: blue; font-size: 20px;" class="fas fa-user"></i>
-  <span class="text" style="color: blue; font-size: large;">Gestion des stagiaires :</span>
+  <span class="text" style="color: blue; font-size: large;">Gestion des stagiar :</span>
   <br><br>
   <div class="mb-3 float-right">
     <div class="btn-group mr-2">
@@ -76,61 +76,6 @@
 
 </body>
 
-<!-- Modal Stagier Info -->
-<!-- <div class="modal fade bd-example-modal-lg" id="viewStagierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-center" id="exampleModalLongTitle">Stagier Details</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <div class="text-center text-sm-left mb-2 mb-sm-0">
-                  <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{ selectedStagier?.nomPrenom }}</h4>
-                  <dl class="row">
-                    <dt class="col-sm-4">Institut:</dt>
-                    <dd class="col-sm-8">{{ selectedStagier?.institut }}</dd>
-
-                    <dt class="col-sm-4">Diplôme:</dt>
-                    <dd class="col-sm-8">{{ selectedStagier?.diplome }}</dd>
-
-                    <dt class="col-sm-4">Spécialité:</dt>
-                    <dd class="col-sm-8">{{ selectedStagier?.specialite }}</dd>
-
-                    <dt class="col-sm-4">CIN:</dt>
-                    <dd class="col-sm-8">{{ selectedStagier?.cin }}</dd>
-
-                    <dt class="col-sm-4">Téléphone:</dt>
-                    <dd class="col-sm-8">{{ selectedStagier?.tel }}</dd>
-
-                    <dt class="col-sm-4">Superviseur:</dt>
-                    <dd class="col-sm-8">{{ selectedStagier?.superviseur?.nomPrenom }}
-                    
-                    </dd>
-
-                    <dt class="col-sm-4">Stage:</dt>
-                    <dd class="col-sm-8">{{ selectedStagier?.stage?.theme }}</dd>
-
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-primary" data-dismiss="modal" id="new-stagier-close">Close</button>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 
 <!-- Modal New Stagier-->
 <div style="z-index:1" class="modal fade" id="addStagierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -163,7 +108,7 @@
                 <input type="text" class="form-control" id="specialite" name="specialite" ngModel required>
               </div>
               <div class="form-group">
-                <label for="specialite">societe</label>
+                <label for="societe">societe</label>
                 <input type="text" class="form-control" id="societe" name="societe" ngModel required>
               </div>
             </div>
@@ -222,33 +167,33 @@
             <div class="col">
               <div class="form-group">
                 <label for="nomPrenom">Nom & Prénom</label>
-                <input type="text"  class="form-control" id="nomPrenom" name="nomPrenom" ngModel required>
+                <input type="text"  class="form-control" id="nomPrenom" name="nomPrenom" [(ngModel)]="pl.nomPrenom" required>
               </div>
               <div class="form-group">
                 <label for="institut">Institut</label>
-                <input type="text"  class="form-control" id="institut" name="institut" ngModel required>
+                <input type="text"  class="form-control" id="institut" name="institut" [(ngModel)]="pl.institut" required>
               </div>
               <div class="form-group">
                 <label for="diplome">Diplôme</label>
-                <input type="text" class="form-control" id="diplome" name="diplome" ngModel required>
+                <input type="text" class="form-control" id="diplome" name="diplome" [(ngModel)]="pl.diplome" required>
               </div>
               <div class="form-group">
                 <label for="specialite">Spécialité</label>
-                <input type="text" class="form-control" id="specialite" name="specialite" ngModel required>
+                <input type="text" class="form-control" id="specialite" name="specialite" [(ngModel)]="pl.specialite" required>
               </div>
               <div class="form-group">
                 <label for="specialite">societe</label>
-                <input type="text" class="form-control" id="societe" name="societe" ngModel required>
+                <input type="text" class="form-control" id="societe" name="societe" [(ngModel)]="pl.societe" required>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label for="cin">CIN</label>
-                <input type="text" class="form-control"  id="cin" name="cin" ngModel required>
+                <input type="text" class="form-control"  id="cin" name="cin" [(ngModel)]="pl.cin" required>
               </div>
               <div class="form-group">
                 <label for="tel">Téléphone</label>
-                <input type="text"   class="form-control" id="tel" name="tel" ngModel required>
+                <input type="text"   class="form-control" id="tel" name="tel" [(ngModel)]="pl.tel" required>
               </div>
              
 

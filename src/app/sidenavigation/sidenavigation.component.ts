@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
 import { NotificationService } from '../service/notification.service';
 import { User } from '../model/user';
+import { Role } from '../enum/role';
 
 declare const bx: any; 
 
@@ -24,6 +25,7 @@ export class SidenavigationComponent  implements AfterViewInit , OnInit{
 
   ngOnInit(): void {
     this.connectedUser=this.authenticationService.getUserFromLocalCache();
+    
   }
   
   ngAfterViewInit() {
@@ -56,6 +58,92 @@ export class SidenavigationComponent  implements AfterViewInit , OnInit{
         this.notificationService.notify(notificationType, 'An error occure . please try again ');
       }
   }
+
+ /////
+
+  public get isAdmin(): boolean {
+    return this.getUserRole() === Role.ADMIN;
+  }
+  public get issuperadmin(): boolean {
+    return this.getUserRole() === Role.SUPERADMIN;
+  }
+  public get isAdminOrHR() : boolean {
+    return this.isRHFormation || this.isAdmin || this.issuperadmin;
+  }
+
+
+
+
+
+
+  public get dashbord():boolean {
+    return this.isAdmin || this.isRHFormation || this.isRHRecrutement || this.issuperadmin
+  }
+  
+
+  public get formation():boolean {
+    return  this.isRHFormation ||  this.issuperadmin || this.isUser
+  }
+  public get chauffeur():boolean {
+    return  this.isRHChauffeur || this.issuperadmin
+  }
+
+  public get recretement():boolean {
+    return  this.isRHRecrutement || this.issuperadmin || this.isUser
+  }
+  public get vesitemedicale():boolean {
+    return  this.isRHVisiteMedicale || this.issuperadmin
+  }
+
+  public get  administration():boolean {
+    return  this.isAdmin || this.issuperadmin
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  public get isUser(): boolean {
+    return this.getUserRole() === Role.USER;
+  }
+ 
+  public get isRHFormation(): boolean {
+    return this.getUserRole() === Role.RHFORMATION;
+  }
+  
+  public get isRHRecrutement(): boolean {
+    return this.getUserRole() === Role.RHRECRETEMENT;
+  }
+  
+  public get isRHChauffeur(): boolean {
+    return this.getUserRole() === Role.RHCHAUFFEUR;
+  }
+  
+  public get isRHVisiteMedicale(): boolean {
+    return this.getUserRole() === Role.RHVISITEMEDICALE;
+  }
+
+
+ 
+  
+  private getUserRole(): string {
+    return this.authenticationService.getUserFromLocalCache().role;
+  }
+  
 
 
   
